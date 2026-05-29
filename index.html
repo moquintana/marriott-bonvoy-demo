@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marriott Bonvoy – Tu próxima aventura</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f5f0;
+      color: #1a1a1a;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: #fff;
+      border-bottom: 3px solid #AA182C;
+      padding: 18px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    }
+    .logo {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1.9rem;
+      font-weight: bold;
+      color: #AA182C;
+      letter-spacing: .04em;
+    }
+    .logo span {
+      font-weight: 300;
+      color: #333;
+      font-size: 1rem;
+      display: block;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      margin-top: -4px;
+    }
+    nav a {
+      text-decoration: none;
+      color: #444;
+      font-size: .9rem;
+      margin-left: 28px;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    nav a:hover { color: #AA182C; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #1a0a0d 0%, #3b0c14 50%, #AA182C 100%);
+      color: #fff;
+      text-align: center;
+      padding: 100px 40px 90px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-badge {
+      display: inline-block;
+      border: 1px solid rgba(255,255,255,.4);
+      color: rgba(255,255,255,.85);
+      font-size: .75rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: normal;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      letter-spacing: .01em;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,.8);
+      max-width: 520px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+    .btn-primary {
+      background: #fff;
+      color: #AA182C;
+      border: none;
+      padding: 14px 36px;
+      font-size: 1rem;
+      font-weight: bold;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background .2s, color .2s;
+    }
+    .btn-primary:hover { background: #f0d8db; }
+
+    /* ── MAIN CONTENT ── */
+    main { max-width: 1100px; margin: 0 auto; padding: 60px 24px 80px; }
+
+    .section-title {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: 1.7rem;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+    }
+    .section-subtitle {
+      font-size: .95rem;
+      color: #777;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      margin-bottom: 36px;
+    }
+
+    /* ── MEMBER CARD ── */
+    .card-section {
+      margin-bottom: 64px;
+    }
+    .member-card {
+      background: linear-gradient(135deg, #1c1c1c 0%, #2d2d2d 60%, #3a3a3a 100%);
+      color: #fff;
+      border-radius: 16px;
+      padding: 36px 40px;
+      max-width: 480px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,.25);
+    }
+    .member-card::after {
+      content: 'M';
+      position: absolute;
+      right: -20px;
+      bottom: -30px;
+      font-family: Georgia, serif;
+      font-size: 180px;
+      color: rgba(255,255,255,.04);
+      font-weight: bold;
+      line-height: 1;
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 32px;
+    }
+    .card-logo {
+      font-family: Georgia, serif;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #fff;
+      letter-spacing: .04em;
+    }
+    .card-logo small {
+      display: block;
+      font-size: .7rem;
+      letter-spacing: .15em;
+      color: rgba(255,255,255,.6);
+      font-family: Arial, sans-serif;
+      font-weight: normal;
+      margin-top: 2px;
+    }
+    .tier-badge {
+      background: linear-gradient(135deg, #C9A84C, #E8D48B, #C9A84C);
+      color: #1a1a1a;
+      font-size: .7rem;
+      font-weight: bold;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+    }
+    .card-name {
+      font-family: Georgia, serif;
+      font-size: 1.6rem;
+      font-weight: normal;
+      letter-spacing: .02em;
+      margin-bottom: 6px;
+    }
+    .card-member-since {
+      font-size: .8rem;
+      color: rgba(255,255,255,.55);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    .card-stats {
+      display: flex;
+      gap: 40px;
+    }
+    .stat label {
+      display: block;
+      font-size: .7rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.5);
+      margin-bottom: 4px;
+    }
+    .stat value {
+      display: block;
+      font-family: Georgia, serif;
+      font-size: 1.5rem;
+      color: #E8D48B;
+      font-weight: bold;
+    }
+    .stat value small {
+      font-size: .75rem;
+      font-family: Arial, sans-serif;
+      color: rgba(255,255,255,.6);
+      font-weight: normal;
+    }
+
+    /* ── HOTEL CARD ── */
+    .hotel-section { margin-bottom: 64px; }
+    .hotel-card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,.1);
+      max-width: 700px;
+    }
+    .hotel-image-placeholder {
+      background: linear-gradient(135deg, #8B0000 0%, #AA182C 40%, #c94060 100%);
+      height: 240px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hotel-image-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='none'/%3E%3Cpath d='M0 50 Q25 20 50 50 Q75 80 100 50' stroke='rgba(255,255,255,0.06)' stroke-width='2' fill='none'/%3E%3Cpath d='M0 30 Q25 0 50 30 Q75 60 100 30' stroke='rgba(255,255,255,0.04)' stroke-width='2' fill='none'/%3E%3Cpath d='M0 70 Q25 40 50 70 Q75 100 100 70' stroke='rgba(255,255,255,0.04)' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+    }
+    .hotel-location-tag {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(0,0,0,.45);
+      color: #fff;
+      font-size: .75rem;
+      padding: 4px 12px;
+      border-radius: 12px;
+      letter-spacing: .08em;
+      backdrop-filter: blur(4px);
+    }
+    .hotel-city {
+      font-family: Georgia, serif;
+      font-size: 3rem;
+      color: rgba(255,255,255,.15);
+      font-weight: bold;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      user-select: none;
+    }
+    .hotel-body { padding: 28px 32px 32px; }
+    .hotel-name {
+      font-family: Georgia, serif;
+      font-size: 1.4rem;
+      color: #1a1a1a;
+      margin-bottom: 6px;
+    }
+    .hotel-tagline {
+      font-size: .9rem;
+      color: #777;
+      margin-bottom: 20px;
+    }
+    .hotel-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .points-tag {
+      background: #fff5f6;
+      border: 1px solid #f2c0c6;
+      color: #AA182C;
+      font-size: .95rem;
+      font-weight: bold;
+      padding: 8px 20px;
+      border-radius: 6px;
+      font-family: Georgia, serif;
+    }
+    .btn-outline {
+      border: 2px solid #AA182C;
+      color: #AA182C;
+      background: transparent;
+      padding: 10px 24px;
+      font-size: .9rem;
+      font-weight: bold;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background .2s, color .2s;
+    }
+    .btn-outline:hover { background: #AA182C; color: #fff; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #1a1a1a;
+      color: rgba(255,255,255,.7);
+      padding: 48px 40px 36px;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .footer-tiers {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .tier-card {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 8px;
+      padding: 20px 16px;
+      text-align: center;
+    }
+    .tier-card .tier-name {
+      font-family: Georgia, serif;
+      font-size: 1rem;
+      color: #fff;
+      margin-bottom: 10px;
+      letter-spacing: .06em;
+    }
+    .tier-card .tier-name.platinum { color: #C9A84C; }
+    .tier-card .tier-name.titanium { color: #a0a0c0; }
+    .tier-card .tier-name.ambassador { color: #E8D48B; }
+    .tier-card ul {
+      list-style: none;
+      font-size: .78rem;
+      line-height: 1.9;
+      color: rgba(255,255,255,.55);
+    }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.1);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: .8rem;
+      color: rgba(255,255,255,.35);
+    }
+    .footer-logo {
+      font-family: Georgia, serif;
+      color: #AA182C;
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      Marriott Bonvoy
+      <span>Loyalty &amp; Rewards</span>
+    </div>
+    <nav>
+      <a href="#">Hoteles</a>
+      <a href="#">Actividades</a>
+      <a href="#">Mi Cuenta</a>
+      <a href="#">Canjear Puntos</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">Programa de Lealtad Exclusivo</div>
+    <h1>Tu próxima aventura<br>te espera</h1>
+    <p>Descubre el mundo con los privilegios Marriott Bonvoy. Cada estancia te acerca más a experiencias únicas e irrepetibles.</p>
+    <button class="btn-primary">Explorar Destinos</button>
+  </section>
+
+  <!-- MAIN -->
+  <main>
+
+    <!-- MEMBER CARD -->
+    <section class="card-section">
+      <p class="section-subtitle">Tu Membresía</p>
+      <h2 class="section-title">Bienvenida de vuelta, Sonia</h2>
+      <div style="margin-top: 28px;">
+        <div class="member-card">
+          <div class="card-header">
+            <div class="card-logo">
+              Marriott Bonvoy
+              <small>Member Card</small>
+            </div>
+            <div class="tier-badge">&#9733; Platinum</div>
+          </div>
+          <div class="card-name">Sonia Vargas</div>
+          <div class="card-member-since">Miembro desde 2016 &nbsp;·&nbsp; 8 años de lealtad</div>
+          <div class="card-stats">
+            <div class="stat">
+              <label>Puntos disponibles</label>
+              <value>124,500 <small>pts</small></value>
+            </div>
+            <div class="stat">
+              <label>Nivel actual</label>
+              <value style="font-size:1.1rem; color:#C9A84C; letter-spacing:.05em;">PLATINUM</value>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOTEL -->
+    <section class="hotel-section">
+      <p class="section-subtitle">Recomendado para ti</p>
+      <h2 class="section-title">Canjea tus puntos en Madrid</h2>
+      <div style="margin-top: 28px;">
+        <div class="hotel-card">
+          <div class="hotel-image-placeholder">
+            <div class="hotel-location-tag">&#127757; Madrid, España</div>
+            <div class="hotel-city">Madrid</div>
+          </div>
+          <div class="hotel-body">
+            <div class="hotel-name">Marriott Madrid Gran Vía</div>
+            <div class="hotel-tagline">Tu sueño a 124,500 puntos &nbsp;·&nbsp; Suite Deluxe con vistas a la ciudad</div>
+            <div class="hotel-meta">
+              <div class="points-tag">&#11088; 124,500 puntos / noche</div>
+              <button class="btn-outline">Reservar ahora</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <p class="section-subtitle" style="color:rgba(255,255,255,.4); margin-bottom:24px;">Beneficios por nivel</p>
+      <div class="footer-tiers">
+        <div class="tier-card">
+          <div class="tier-name">Silver</div>
+          <ul>
+            <li>10% puntos extra</li>
+            <li>Late check-out</li>
+            <li>Wi-Fi gratuito</li>
+          </ul>
+        </div>
+        <div class="tier-card">
+          <div class="tier-name">Gold</div>
+          <ul>
+            <li>25% puntos extra</li>
+            <li>Mejora de habitación</li>
+            <li>Desayuno incluido</li>
+          </ul>
+        </div>
+        <div class="tier-card">
+          <div class="tier-name platinum">Platinum ★</div>
+          <ul>
+            <li>50% puntos extra</li>
+            <li>Suite garantizada</li>
+            <li>Lounge acceso VIP</li>
+            <li>Welcome amenity</li>
+          </ul>
+        </div>
+        <div class="tier-card">
+          <div class="tier-name titanium">Titanium</div>
+          <ul>
+            <li>75% puntos extra</li>
+            <li>48h late check-out</li>
+            <li>Guaranteed suite</li>
+            <li>Concierge dedicado</li>
+          </ul>
+        </div>
+        <div class="tier-card">
+          <div class="tier-name ambassador">Ambassador</div>
+          <ul>
+            <li>Ambassador personal</li>
+            <li>Your24™ check-in</li>
+            <li>Acceso global suite</li>
+            <li>Experiencias únicas</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-logo">Marriott Bonvoy</span>
+        <span>&copy; 2026 Marriott International. Demo de presentación. Todos los derechos reservados.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SALESFORCE EMBEDDED MESSAGING -->
+  <script type='text/javascript'>
+    function initEmbeddedMessaging() {
+        try {
+            embeddedservice_bootstrap.settings.language = 'es';
+            embeddedservice_bootstrap.init(
+                '00DgL00000SLYUn',
+                'Bonvoy_Concierge_Chat',
+                'https://trailsignup-1174d98311a517.my.site.com/ESWBonvoyConciergeChat1780016660530',
+                {
+                    scrt2URL: 'https://trailsignup-1174d98311a517.my.salesforce-scrt.com'
+                }
+            );
+        } catch (err) {
+            console.error('Error loading Embedded Messaging: ', err);
+        }
+    };
+  </script>
+  <script type='text/javascript'
+      src='https://trailsignup-1174d98311a517.my.site.com/ESWBonvoyConciergeChat1780016660530/assets/js/bootstrap.min.js'
+      onload='initEmbeddedMessaging()'>
+  </script>
+
+</body>
+</html>
