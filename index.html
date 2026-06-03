@@ -1,530 +1,1576 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Marriott Bonvoy – Tu próxima aventura</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FirstBank Puerto Rico | Tu Banca Digital</title>
+    <!-- Tailwind CSS v3 CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Montserrat (Headers) and Inter (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <!-- FontAwesome 6 for crisp financial icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              fb: {
+                green: '#028542',
+                darkgreen: '#015f2f',
+                lightgreen: '#edf7f2',
+                orange: '#e37222',
+                darkorange: '#c55e17',
+                blue: '#0e4b88',
+                graybg: '#f8fafc',
+                charcoal: '#1e293b'
+              }
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              display: ['Montserrat', 'sans-serif']
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      /* Custom active underline animations */
+      .nav-hover {
+        position: relative;
+      }
+      .nav-hover::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        transform: scaleX(0);
+        height: 2px;
+        bottom: -4px;
+        left: 0;
+        background-color: #028542;
+        transform-origin: bottom right;
+        transition: transform 0.25s ease-out;
+      }
+      .nav-hover:hover::after {
+        transform: scaleX(1);
+        transform-origin: bottom left;
+      }
+    </style>
+  </head>
+  <body class="bg-fb-graybg font-sans text-fb-charcoal transition-colors duration-300">
 
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f5f5f0;
-      color: #1a1a1a;
-    }
-
-    /* ── HEADER ── */
-    header {
-      background: #fff;
-      border-bottom: 3px solid #AA182C;
-      padding: 18px 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 2px 8px rgba(0,0,0,.08);
-    }
-    .logo {
-      font-family: Georgia, 'Times New Roman', serif;
-      font-size: 1.9rem;
-      font-weight: bold;
-      color: #AA182C;
-      letter-spacing: .04em;
-    }
-    .logo span {
-      font-weight: 300;
-      color: #333;
-      font-size: 1rem;
-      display: block;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      margin-top: -4px;
-    }
-    nav a {
-      text-decoration: none;
-      color: #444;
-      font-size: .9rem;
-      margin-left: 28px;
-      letter-spacing: .05em;
-      text-transform: uppercase;
-    }
-    nav a:hover { color: #AA182C; }
-
-    /* ── HERO ── */
-    .hero {
-      background: linear-gradient(135deg, #1a0a0d 0%, #3b0c14 50%, #AA182C 100%);
-      color: #fff;
-      text-align: center;
-      padding: 100px 40px 90px;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    }
-    .hero-badge {
-      display: inline-block;
-      border: 1px solid rgba(255,255,255,.4);
-      color: rgba(255,255,255,.85);
-      font-size: .75rem;
-      letter-spacing: .2em;
-      text-transform: uppercase;
-      padding: 6px 18px;
-      border-radius: 20px;
-      margin-bottom: 24px;
-    }
-    .hero h1 {
-      font-family: Georgia, 'Times New Roman', serif;
-      font-size: clamp(2.2rem, 5vw, 3.8rem);
-      font-weight: normal;
-      line-height: 1.2;
-      margin-bottom: 20px;
-      letter-spacing: .01em;
-    }
-    .hero p {
-      font-size: 1.15rem;
-      color: rgba(255,255,255,.8);
-      max-width: 520px;
-      margin: 0 auto 36px;
-      line-height: 1.7;
-    }
-    .btn-primary {
-      background: #fff;
-      color: #AA182C;
-      border: none;
-      padding: 14px 36px;
-      font-size: 1rem;
-      font-weight: bold;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      cursor: pointer;
-      border-radius: 2px;
-      transition: background .2s, color .2s;
-    }
-    .btn-primary:hover { background: #f0d8db; }
-
-    /* ── MAIN CONTENT ── */
-    main { max-width: 1100px; margin: 0 auto; padding: 60px 24px 80px; }
-
-    .section-title {
-      font-family: Georgia, 'Times New Roman', serif;
-      font-size: 1.7rem;
-      color: #1a1a1a;
-      margin-bottom: 8px;
-    }
-    .section-subtitle {
-      font-size: .95rem;
-      color: #777;
-      letter-spacing: .05em;
-      text-transform: uppercase;
-      margin-bottom: 36px;
-    }
-
-    /* ── MEMBER CARD ── */
-    .card-section {
-      margin-bottom: 64px;
-    }
-    .member-card {
-      background: linear-gradient(135deg, #1c1c1c 0%, #2d2d2d 60%, #3a3a3a 100%);
-      color: #fff;
-      border-radius: 16px;
-      padding: 36px 40px;
-      max-width: 480px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 12px 40px rgba(0,0,0,.25);
-    }
-    .member-card::after {
-      content: 'M';
-      position: absolute;
-      right: -20px;
-      bottom: -30px;
-      font-family: Georgia, serif;
-      font-size: 180px;
-      color: rgba(255,255,255,.04);
-      font-weight: bold;
-      line-height: 1;
-    }
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 32px;
-    }
-    .card-logo {
-      font-family: Georgia, serif;
-      font-size: 1.1rem;
-      font-weight: bold;
-      color: #fff;
-      letter-spacing: .04em;
-    }
-    .card-logo small {
-      display: block;
-      font-size: .7rem;
-      letter-spacing: .15em;
-      color: rgba(255,255,255,.6);
-      font-family: Arial, sans-serif;
-      font-weight: normal;
-      margin-top: 2px;
-    }
-    .tier-badge {
-      background: linear-gradient(135deg, #C9A84C, #E8D48B, #C9A84C);
-      color: #1a1a1a;
-      font-size: .7rem;
-      font-weight: bold;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      padding: 5px 14px;
-      border-radius: 20px;
-    }
-    .card-name {
-      font-family: Georgia, serif;
-      font-size: 1.6rem;
-      font-weight: normal;
-      letter-spacing: .02em;
-      margin-bottom: 6px;
-    }
-    .card-member-since {
-      font-size: .8rem;
-      color: rgba(255,255,255,.55);
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      margin-bottom: 28px;
-    }
-    .card-stats {
-      display: flex;
-      gap: 40px;
-    }
-    .stat label {
-      display: block;
-      font-size: .7rem;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,.5);
-      margin-bottom: 4px;
-    }
-    .stat value {
-      display: block;
-      font-family: Georgia, serif;
-      font-size: 1.5rem;
-      color: #E8D48B;
-      font-weight: bold;
-    }
-    .stat value small {
-      font-size: .75rem;
-      font-family: Arial, sans-serif;
-      color: rgba(255,255,255,.6);
-      font-weight: normal;
-    }
-
-    /* ── HOTEL CARD ── */
-    .hotel-section { margin-bottom: 64px; }
-    .hotel-card {
-      background: #fff;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 24px rgba(0,0,0,.1);
-      max-width: 700px;
-    }
-    .hotel-image-placeholder {
-      background: linear-gradient(135deg, #8B0000 0%, #AA182C 40%, #c94060 100%);
-      height: 240px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .hotel-image-placeholder::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='none'/%3E%3Cpath d='M0 50 Q25 20 50 50 Q75 80 100 50' stroke='rgba(255,255,255,0.06)' stroke-width='2' fill='none'/%3E%3Cpath d='M0 30 Q25 0 50 30 Q75 60 100 30' stroke='rgba(255,255,255,0.04)' stroke-width='2' fill='none'/%3E%3Cpath d='M0 70 Q25 40 50 70 Q75 100 100 70' stroke='rgba(255,255,255,0.04)' stroke-width='2' fill='none'/%3E%3C/svg%3E");
-    }
-    .hotel-location-tag {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      background: rgba(0,0,0,.45);
-      color: #fff;
-      font-size: .75rem;
-      padding: 4px 12px;
-      border-radius: 12px;
-      letter-spacing: .08em;
-      backdrop-filter: blur(4px);
-    }
-    .hotel-city {
-      font-family: Georgia, serif;
-      font-size: 3rem;
-      color: rgba(255,255,255,.15);
-      font-weight: bold;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      user-select: none;
-    }
-    .hotel-body { padding: 28px 32px 32px; }
-    .hotel-name {
-      font-family: Georgia, serif;
-      font-size: 1.4rem;
-      color: #1a1a1a;
-      margin-bottom: 6px;
-    }
-    .hotel-tagline {
-      font-size: .9rem;
-      color: #777;
-      margin-bottom: 20px;
-    }
-    .hotel-meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-    .points-tag {
-      background: #fff5f6;
-      border: 1px solid #f2c0c6;
-      color: #AA182C;
-      font-size: .95rem;
-      font-weight: bold;
-      padding: 8px 20px;
-      border-radius: 6px;
-      font-family: Georgia, serif;
-    }
-    .btn-outline {
-      border: 2px solid #AA182C;
-      color: #AA182C;
-      background: transparent;
-      padding: 10px 24px;
-      font-size: .9rem;
-      font-weight: bold;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      cursor: pointer;
-      border-radius: 2px;
-      transition: background .2s, color .2s;
-    }
-    .btn-outline:hover { background: #AA182C; color: #fff; }
-
-    /* ── FOOTER ── */
-    footer {
-      background: #1a1a1a;
-      color: rgba(255,255,255,.7);
-      padding: 48px 40px 36px;
-    }
-    .footer-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    .footer-tiers {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 24px;
-      margin-bottom: 40px;
-    }
-    .tier-card {
-      background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 8px;
-      padding: 20px 16px;
-      text-align: center;
-    }
-    .tier-card .tier-name {
-      font-family: Georgia, serif;
-      font-size: 1rem;
-      color: #fff;
-      margin-bottom: 10px;
-      letter-spacing: .06em;
-    }
-    .tier-card .tier-name.platinum { color: #C9A84C; }
-    .tier-card .tier-name.titanium { color: #a0a0c0; }
-    .tier-card .tier-name.ambassador { color: #E8D48B; }
-    .tier-card ul {
-      list-style: none;
-      font-size: .78rem;
-      line-height: 1.9;
-      color: rgba(255,255,255,.55);
-    }
-    .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,.1);
-      padding-top: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      font-size: .8rem;
-      color: rgba(255,255,255,.35);
-    }
-    .footer-logo {
-      font-family: Georgia, serif;
-      color: #AA182C;
-      font-size: 1.1rem;
-      font-weight: bold;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- HEADER -->
-  <header>
-    <div class="logo">
-      Marriott Bonvoy
-      <span>Loyalty &amp; Rewards</span>
-    </div>
-    <nav>
-      <a href="#">Hoteles</a>
-      <a href="#">Actividades</a>
-      <a href="#">Mi Cuenta</a>
-      <a href="#">Canjear Puntos</a>
-    </nav>
-  </header>
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-badge">Programa de Lealtad Exclusivo</div>
-    <h1>Tu próxima aventura<br>te espera</h1>
-    <p>Descubre el mundo con los privilegios Marriott Bonvoy. Cada estancia te acerca más a experiencias únicas e irrepetibles.</p>
-    <button class="btn-primary">Explorar Destinos</button>
-  </section>
-
-  <!-- MAIN -->
-  <main>
-
-    <!-- MEMBER CARD -->
-    <section class="card-section">
-      <p class="section-subtitle">Tu Membresía</p>
-      <h2 class="section-title">Bienvenida de vuelta, Sonia</h2>
-      <div style="margin-top: 28px;">
-        <div class="member-card">
-          <div class="card-header">
-            <div class="card-logo">
-              Marriott Bonvoy
-              <small>Member Card</small>
-            </div>
-            <div class="tier-badge">&#9733; Platinum</div>
-          </div>
-          <div class="card-name">Sonia Vargas</div>
-          <div class="card-member-since">Miembro desde 2016 &nbsp;·&nbsp; 8 años de lealtad</div>
-          <div class="card-stats">
-            <div class="stat">
-              <label>Puntos disponibles</label>
-              <value>124,500 <small>pts</small></value>
-            </div>
-            <div class="stat">
-              <label>Nivel actual</label>
-              <value style="font-size:1.1rem; color:#C9A84C; letter-spacing:.05em;">PLATINUM</value>
-            </div>
-          </div>
+    <!-- TOP NAV BAR (Utility Bar) -->
+    <div class="bg-[#1a1a1a] text-white text-xs py-2 px-4 md:px-8 border-b border-gray-800">
+      <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <!-- Segments Left -->
+        <div class="flex items-center space-x-4">
+          <a href="#" class="font-bold text-fb-green hover:text-white transition-colors duration-205" data-translate="nav_personal">Personal</a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-205" data-translate="nav_negocios">Negocios</a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-205" data-translate="nav_corp">Corporativo</a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors duration-205" data-translate="nav_nosotros">Nosotros</a>
         </div>
-      </div>
-    </section>
-
-    <!-- HOTEL -->
-    <section class="hotel-section">
-      <p class="section-subtitle">Recomendado para ti</p>
-      <h2 class="section-title">Canjea tus puntos en Madrid</h2>
-      <div style="margin-top: 28px;">
-        <div class="hotel-card">
-          <div class="hotel-image-placeholder">
-            <div class="hotel-location-tag">&#127757; Madrid, España</div>
-            <div class="hotel-city">Madrid</div>
-          </div>
-          <div class="hotel-body">
-            <div class="hotel-name">Marriott Madrid Gran Vía</div>
-            <div class="hotel-tagline">Tu sueño a 124,500 puntos &nbsp;·&nbsp; Suite Deluxe con vistas a la ciudad</div>
-            <div class="hotel-meta">
-              <div class="points-tag">&#11088; 124,500 puntos / noche</div>
-              <button class="btn-outline">Reservar ahora</button>
-            </div>
-          </div>
+        <!-- Right Utilities -->
+        <div class="flex items-center space-x-5">
+          <a href="#localidades" class="text-gray-400 hover:text-white transition-colors flex items-center gap-1.5">
+            <i class="fa-solid fa-location-dot text-fb-green"></i>
+            <span class="hidden sm:inline" data-translate="top_localidades">Localidades</span>
+          </a>
+          <a href="#contacto" class="text-gray-400 hover:text-white transition-colors flex items-center gap-1.5">
+            <i class="fa-solid fa-phone text-fb-green"></i>
+            <span class="hidden sm:inline" data-translate="top_contacto">Contáctanos</span>
+          </a>
+          <!-- Language Toggle Button -->
+          <button onclick="toggleLang()" class="bg-gray-800 text-white font-medium px-3 py-1 rounded border border-gray-700 hover:bg-fb-green hover:border-fb-green transition-all flex items-center gap-1">
+            <i class="fa-solid fa-globe text-xs"></i>
+            <span id="lang-btn-text">English</span>
+          </button>
         </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-inner">
-      <p class="section-subtitle" style="color:rgba(255,255,255,.4); margin-bottom:24px;">Beneficios por nivel</p>
-      <div class="footer-tiers">
-        <div class="tier-card">
-          <div class="tier-name">Silver</div>
-          <ul>
-            <li>10% puntos extra</li>
-            <li>Late check-out</li>
-            <li>Wi-Fi gratuito</li>
-          </ul>
-        </div>
-        <div class="tier-card">
-          <div class="tier-name">Gold</div>
-          <ul>
-            <li>25% puntos extra</li>
-            <li>Mejora de habitación</li>
-            <li>Desayuno incluido</li>
-          </ul>
-        </div>
-        <div class="tier-card">
-          <div class="tier-name platinum">Platinum ★</div>
-          <ul>
-            <li>50% puntos extra</li>
-            <li>Suite garantizada</li>
-            <li>Lounge acceso VIP</li>
-            <li>Welcome amenity</li>
-          </ul>
-        </div>
-        <div class="tier-card">
-          <div class="tier-name titanium">Titanium</div>
-          <ul>
-            <li>75% puntos extra</li>
-            <li>48h late check-out</li>
-            <li>Guaranteed suite</li>
-            <li>Concierge dedicado</li>
-          </ul>
-        </div>
-        <div class="tier-card">
-          <div class="tier-name ambassador">Ambassador</div>
-          <ul>
-            <li>Ambassador personal</li>
-            <li>Your24™ check-in</li>
-            <li>Acceso global suite</li>
-            <li>Experiencias únicas</li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span class="footer-logo">Marriott Bonvoy</span>
-        <span>&copy; 2026 Marriott International. Demo de presentación. Todos los derechos reservados.</span>
       </div>
     </div>
-  </footer>
 
-  <!-- SALESFORCE EMBEDDED MESSAGING -->
-  <script type='text/javascript'>
-	function initEmbeddedMessaging() {
-		try {
-			embeddedservice_bootstrap.settings.language = 'en_US'; // For example, enter 'en' or 'en-US'
+    <!-- MAIN STICKY BAR -->
+    <header class="bg-white shadow-md sticky top-0 z-40 transition-all duration-300">
+      <div class="max-w-7xl mx-auto px-4 md:px-8 py-3.5 flex justify-between items-center">
+        <!-- Logo -->
+        <div class="flex items-center space-x-2 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+          <div class="w-10 h-10 bg-fb-green rounded-lg flex items-center justify-center shadow-md">
+            <span class="font-display font-extrabold text-white text-2xl tracking-tighter">1</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-display font-black text-xl text-fb-green tracking-tight leading-none">FirstBank</span>
+            <span class="text-[9px] text-gray-500 tracking-widest font-semibold uppercase leading-none">Puerto Rico</span>
+          </div>
+        </div>
 
-			embeddedservice_bootstrap.init(
-				'00Dak00000uKH6J',
-				'Bonvoy_Chat',
-				'https://trailsignup-610f71f5cec054.my.site.com/ESWBonvoyChat1780022026283',
-				{
-					scrt2URL: 'https://trailsignup-610f71f5cec054.my.salesforce-scrt.com'
-				}
-			);
-		} catch (err) {
-			console.error('Error loading Embedded Messaging: ', err);
-		}
-	};
-</script>
-<script type='text/javascript' src='https://trailsignup-610f71f5cec054.my.site.com/ESWBonvoyChat1780022026283/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
+        <!-- Desktop Menu Links -->
+        <nav class="hidden lg:flex items-center space-x-7 font-medium text-sm text-gray-700">
+          <a href="#cuentas" class="nav-hover hover:text-fb-green transition-all duration-200" data-translate="menu_cuentas">Cuentas</a>
+          <a href="#tarjetas" class="nav-hover hover:text-fb-green transition-all duration-200" data-translate="menu_tarjetas">Tarjetas</a>
+          <a href="#prestamos" class="nav-hover hover:text-fb-green transition-all duration-200" data-translate="menu_prestamos">Préstamos</a>
+          <a href="#inversiones" class="nav-hover hover:text-fb-green transition-all duration-200" data-translate="menu_inversiones">Inversiones</a>
+          <a href="#seguros" class="nav-hover hover:text-fb-green transition-all duration-200" data-translate="menu_seguros">Seguros</a>
+          <a href="#servicios" class="nav-hover hover:text-fb-green transition-all duration-200" data-translate="menu_servicios">Servicios</a>
+        </nav>
 
-</body>
+        <!-- Right Side: Login Button Action Toggle -->
+        <div class="flex items-center space-x-3">
+          <!-- Live Rate Ticker Trigger -->
+          <a href="#tasas" class="hidden md:flex items-center text-xs text-fb-darkgreen font-semibold bg-fb-lightgreen px-3 py-1.5 rounded-full hover:bg-fb-green hover:text-white transition-all">
+            <i class="fa-solid fa-chart-line mr-1"></i> <span data-translate="menu_tasas">Ver Tasas</span>
+          </a>
+          <button onclick="focusLogin()" class="bg-fb-green hover:bg-fb-darkgreen text-white font-bold py-2 px-5 rounded-lg shadow-md transition-all duration-200 flex items-center space-x-2 text-sm">
+            <i class="fa-solid fa-lock"></i>
+            <span data-translate="menu_banca">Banca por Internet</span>
+          </button>
+          
+          <!-- Mobile Menu Toggle -->
+          <button onclick="toggleMobileMenu()" class="lg:hidden text-gray-700 hover:text-fb-green focus:outline-none text-2xl p-1">
+            <i id="menu-icon-bars" class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu Dropdown -->
+      <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 px-6 py-4 space-y-3 shadow-inner">
+        <a href="#cuentas" onclick="toggleMobileMenu()" class="block font-medium py-1.5 border-b border-gray-50 text-gray-700 hover:text-fb-green" data-translate="menu_cuentas">Cuentas</a>
+        <a href="#tarjetas" onclick="toggleMobileMenu()" class="block font-medium py-1.5 border-b border-gray-50 text-gray-700 hover:text-fb-green" data-translate="menu_tarjetas">Tarjetas</a>
+        <a href="#prestamos" onclick="toggleMobileMenu()" class="block font-medium py-1.5 border-b border-gray-50 text-gray-700 hover:text-fb-green" data-translate="menu_prestamos">Préstamos</a>
+        <a href="#inversiones" onclick="toggleMobileMenu()" class="block font-medium py-1.5 border-b border-gray-50 text-gray-700 hover:text-fb-green" data-translate="menu_inversiones">Inversiones</a>
+        <a href="#seguros" onclick="toggleMobileMenu()" class="block font-medium py-1.5 border-b border-gray-50 text-gray-700 hover:text-fb-green" data-translate="menu_seguros">Seguros</a>
+        <a href="#servicios" onclick="toggleMobileMenu()" class="block font-medium py-1.5 text-gray-700 hover:text-fb-green" data-translate="menu_servicios">Servicios</a>
+        <div class="pt-2 flex flex-col space-y-2">
+          <a href="#tasas" onclick="toggleMobileMenu()" class="text-center font-bold text-fb-green bg-fb-lightgreen py-2 rounded-lg text-sm" data-translate="menu_tasas">Ver Tasas de Interés</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- SECURE INTERACTIVE DIGITAL BANK PANEL (MOCK ONLINE PORTAL OVERLAY) -->
+    <div id="dashboard-portal" class="hidden fixed inset-0 bg-fb-charcoal/95 z-50 flex flex-col justify-between overflow-y-auto">
+      <!-- Dashboard Top Header -->
+      <div class="bg-fb-green p-4 md:px-8 text-white flex justify-between items-center shadow-lg">
+        <div class="flex items-center space-x-2">
+          <div class="w-8 h-8 bg-white text-fb-green rounded flex items-center justify-center font-bold text-lg shadow">1</div>
+          <span class="font-display font-bold text-lg" data-translate="dash_header">Tu Banca Digital | FirstBank</span>
+        </div>
+        <div class="flex items-center space-x-4">
+          <div class="text-right hidden sm:block">
+            <p class="text-xs text-emerald-100" data-translate="dash_welcome">Bienvenido,</p>
+            <p class="text-sm font-bold" id="dash-username-display">Usuario</p>
+          </div>
+          <button onclick="logoutPortal()" class="bg-fb-orange hover:bg-fb-darkorange px-4 py-2 rounded font-bold text-xs shadow-md transition-all flex items-center gap-1.5">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span data-translate="dash_logout">Cerrar Sesión</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Dashboard Body Content -->
+      <div class="max-w-6xl w-full mx-auto p-4 md:p-8 flex-grow">
+        <!-- Top Statistics summary Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <!-- Card 1 Checks -->
+          <div class="bg-white p-6 rounded-2xl shadow-xl border-l-[6px] border-fb-green hover:-translate-y-1 transition-transform duration-300">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-gray-500 font-semibold text-xs uppercase" data-translate="dash_check_acc">Cuenta de Cheques First Plus</span>
+              <span class="bg-fb-lightgreen text-fb-darkgreen text-[10px] px-2 py-0.5 rounded font-bold">0032948-2</span>
+            </div>
+            <p class="text-3xl font-bold text-fb-charcoal">$4,258.91</p>
+            <p class="text-xs text-gray-400 mt-2" data-translate="dash_acc_avail">Disponible para transacciones</p>
+          </div>
+          <!-- Card 2 Savings -->
+          <div class="bg-white p-6 rounded-2xl shadow-xl border-l-[6px] border-fb-blue hover:-translate-y-1 transition-transform duration-300">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-gray-500 font-semibold text-xs uppercase" data-translate="dash_save_acc">Ahorros Especiales</span>
+              <span class="bg-blue-50 text-fb-blue text-[10px] px-2 py-0.5 rounded font-bold">0042459-0</span>
+            </div>
+            <p class="text-3xl font-bold text-fb-charcoal">$12,850.44</p>
+            <p class="text-xs text-gray-400 mt-2"><span data-translate="dash_save_apy">Interés acumulado esta mensualidad</span>: <span class="text-fb-green font-semibold">3.50% APY</span></p>
+          </div>
+          <!-- Card 3 Credit Card -->
+          <div class="bg-white p-6 rounded-2xl shadow-xl border-l-[6px] border-fb-orange hover:-translate-y-1 transition-transform duration-300">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-gray-500 font-semibold text-xs uppercase" data-translate="dash_card_acc">Tarjeta Beyond Visa</span>
+              <span class="bg-orange-50 text-fb-orange text-[10px] px-2 py-0.5 rounded font-bold">●●●● 8201</span>
+            </div>
+            <p class="text-3xl font-bold text-fb-charcoal">-$842.10</p>
+            <p class="text-xs text-gray-400 mt-2"><span data-translate="dash_card_limit">Límite disponible</span>: $4,157.90</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <!-- Recent Transactions (8 cols) -->
+          <div class="lg:col-span-7 bg-white p-6 rounded-2xl shadow-xl border border-gray-100 flex flex-col">
+            <div class="flex justify-between items-center pb-4 border-b border-gray-150 mb-4">
+              <h3 class="font-display font-bold text-fb-charcoal flex items-center gap-2">
+                <i class="fa-solid fa-list-ul text-fb-green"></i>
+                <span data-translate="dash_recent">Transacciones Recientes</span>
+              </h3>
+              <span class="text-xs text-gray-400" data-translate="dash_sync">Sincronizado hace un momento</span>
+            </div>
+            
+            <div class="space-y-4 divide-y divide-gray-100 flex-grow max-h-[350px] overflow-y-auto pr-1">
+              <!-- Item 1 -->
+              <div class="flex justify-between items-center pt-3">
+                <div class="flex items-center space-x-3">
+                  <div class="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 font-semibold"><i class="fa-solid fa-basket-shopping text-sm"></i></div>
+                  <div>
+                    <h5 class="font-semibold text-sm">Supermercados Pueblo</h5>
+                    <p class="text-xs text-gray-400">03 de Junio, 2026 - 15:20</p>
+                  </div>
+                </div>
+                <div class="text-right font-bold text-sm text-fb-charcoal">-$62.45</div>
+              </div>
+              <!-- Item 2 -->
+              <div class="flex justify-between items-center pt-3">
+                <div class="flex items-center space-x-3">
+                  <div class="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 font-semibold"><i class="fa-solid fa-car text-sm"></i></div>
+                  <div>
+                    <h5 class="font-semibold text-sm">AutoExpreso Recarga</h5>
+                    <p class="text-xs text-gray-400">02 de Junio, 2026 - 09:12</p>
+                  </div>
+                </div>
+                <div class="text-right font-bold text-sm text-fb-charcoal">-$20.00</div>
+              </div>
+              <!-- Item 3 -->
+              <div class="flex justify-between items-center pt-3">
+                <div class="flex items-center space-x-3">
+                  <div class="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 font-semibold"><i class="fa-solid fa-mug-hot text-sm"></i></div>
+                  <div>
+                    <h5 class="font-semibold text-sm">Starbucks San Patricio</h5>
+                    <p class="text-xs text-gray-400">31 de Mayo, 2026 - 08:34</p>
+                  </div>
+                </div>
+                <div class="text-right font-bold text-sm text-fb-charcoal">-$6.85</div>
+              </div>
+              <!-- Item 4 -->
+              <div class="flex justify-between items-center pt-3">
+                <div class="flex items-center space-x-3">
+                  <div class="w-9 h-9 bg-emerald-50 rounded-full flex items-center justify-center text-fb-green font-semibold"><i class="fa-solid fa-money-bill-transfer text-xs"></i></div>
+                  <div>
+                    <h5 class="font-semibold text-sm">Depósito Directo / Nómina</h5>
+                    <p class="text-xs text-gray-400">30 de Mayo, 2026 - 04:00</p>
+                  </div>
+                </div>
+                <div class="text-right font-bold text-sm text-fb-green">+$1,840.00</div>
+              </div>
+              <!-- Item 5 -->
+              <div class="flex justify-between items-center pt-3">
+                <div class="flex items-center space-x-3">
+                  <div class="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 font-semibold"><i class="fa-solid fa-house-chimney text-xs"></i></div>
+                  <div>
+                    <h5 class="font-semibold text-sm">FirstMortgage Débito</h5>
+                    <p class="text-xs text-gray-400">28 de Mayo, 2026 - 12:00</p>
+                  </div>
+                </div>
+                <div class="text-right font-bold text-sm text-fb-charcoal">-$950.00</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Transaction Launcher (5 cols) -->
+          <div class="lg:col-span-5 bg-white p-6 rounded-2xl shadow-xl border border-gray-100">
+            <h3 class="font-display font-bold text-fb-charcoal flex items-center gap-2 pb-4 border-b border-gray-150 mb-4">
+              <i class="fa-solid fa-paper-plane text-fb-green"></i>
+              <span data-translate="dash_send_header">Transferir Dinero & Pagar</span>
+            </h3>
+            
+            <form id="transfer-form" onsubmit="executeMockTransfer(event)" class="space-y-4">
+              <div>
+                <label class="block text-xs font-bold text-gray-500 uppercase mb-1" data-translate="dash_origin">Origen de Fondos</label>
+                <select class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 text-sm focus:outline-none focus:border-fb-green">
+                  <option data-translate="dash_origin_opt">Cuenta Cheques First Plus ($4,258.91)</option>
+                  <option data-translate="dash_origin_opt2">Cuenta Ahorros Especiales ($12,850.44)</option>
+                </select>
+              </div>
+              
+              <div>
+                <label class="block text-xs font-bold text-gray-500 uppercase mb-1" data-translate="dash_dest">Destinatario / Pago</label>
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                    <i class="fa-regular fa-user"></i>
+                  </div>
+                  <input required type="text" id="transfer-to" class="w-full bg-gray-50 border border-gray-200 rounded-lg py-2 pl-9 pr-3 text-sm focus:outline-none focus:border-fb-green" placeholder="Nombre completo, celular o número de cuenta" data-translate="dash_dest_holder" />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold text-gray-500 uppercase mb-1" data-translate="dash_amount">Cantidad ($)</label>
+                  <input required type="number" id="transfer-val" step="0.01" min="1" max="4000" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 text-sm focus:outline-none focus:border-fb-green font-bold text-fb-charcoal" placeholder="0.00" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-gray-500 uppercase mb-1" data-translate="dash_concept">Concepto</label>
+                  <input type="text" id="transfer-memo" class="w-full bg-gray-50 border border-gray-200 rounded-lg p-2.5 text-sm focus:outline-none focus:border-fb-green" placeholder="Regalo, Pago, Almuerzo" data-translate="dash_concept_holder" />
+                </div>
+              </div>
+
+              <button type="submit" class="w-full bg-fb-green hover:bg-fb-darkgreen text-white font-bold py-3 rounded-lg shadow-md transition-all uppercase text-xs tracking-wider flex items-center justify-center gap-2">
+                <i class="fa-solid fa-circle-check"></i>
+                <span data-translate="dash_btn_trans">Enviar Dinero de Forma Segura</span>
+              </button>
+            </form>
+            
+            <!-- Transfer feedback -->
+            <div id="transfer-feedback" class="hidden mt-4 p-3.5 bg-emerald-50 border border-emerald-200 text-fb-darkgreen text-xs rounded-lg flex items-start gap-2 animate-bounce">
+              <i class="fa-solid fa-shield-halved text-fb-green text-sm mt-0.5"></i>
+              <div>
+                <p class="font-bold uppercase" data-translate="dash_sucess">Transacción Exitosa</p>
+                <p id="transfer-success-msg" data-translate="dash_success_sub">Los fondos de su cuenta de FirstPlus han sido transferidos correctamente utilizando encriptación bancaria SSL 256 bits.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard Footer -->
+      <div class="bg-[#151515] p-4 text-center text-[10px] text-gray-500 border-t border-gray-800">
+        <p data-translate="dash_disclaimer">Primera Institución Autorizada bajo las leyes bancarias de Puerto Rico. Licencia #31.© 2026 FirstBank Puerto Rico. Miembro FDIC. Equal Housing Lender.</p>
+      </div>
+    </div>
+
+    <!-- MAIN BODY GRIDS AND CAROUSELS -->
+    <main id="homepage-body">
+      <!-- HERO CONTAINER: Hero Slider + Floating Login Box -->
+      <section class="relative min-h-[520px] md:min-h-[600px] flex items-center bg-gray-900 overflow-hidden">
+        
+        <!-- Background Slider Images (Absolutely Positioned) -->
+        <div id="slide-container" class="absolute inset-0 z-0">
+          <!-- Slide 1 -->
+          <div class="absolute inset-0 bg-cover bg-center brightness-[0.45] transition-opacity duration-1000 opacity-100" style="background-image: url('https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?q=80&w=1600&auto=format&fit=crop');"></div>
+          <!-- Slide 2 -->
+          <div class="absolute inset-0 bg-cover bg-center brightness-[0.45] transition-opacity duration-1000 opacity-0" style="background-image: url('https://images.unsplash.com/photo-1559526324-4b87b5e36e44?q=80&w=1600&auto=format&fit=crop');"></div>
+          <!-- Slide 3 -->
+          <div class="absolute inset-0 bg-cover bg-center brightness-[0.45] transition-opacity duration-1000 opacity-0" style="background-image: url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1600&auto=format&fit=crop');"></div>
+        </div>
+
+        <!-- Banner Overlay Content -->
+        <div class="relative z-10 max-w-7xl w-full mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 py-10 items-center">
+          
+          <!-- Text Slider Info (7 cols) -->
+          <div class="lg:col-span-7 text-white space-y-6 select-none">
+            <span class="inline-block bg-fb-green/90 font-display font-bold text-xs uppercase tracking-widest px-3 py-1 rounded-full text-white shadow-md border border-emerald-400" id="hero-tag" data-translate="hero_tag1">
+              Banca 100% Segura
+            </span>
+            
+            <div class="space-y-3">
+              <h1 class="font-display font-extrabold text-3xl md:text-5xl leading-tight tracking-tight drop-shadow-md transition-all duration-300" id="hero-title" data-translate="hero_title1">
+                Llega más lejos con tu Cuenta de Ahorro
+              </h1>
+              <p class="text-gray-200 text-base md:text-lg max-w-xl font-normal drop-shadow" id="hero-desc" data-translate="hero_desc1">
+                Abre tu cuenta hoy con 0 cargos mensuales y accede a una de las mejores tasas de rendimiento en Puerto Rico para hacer crecer tus ahorros con paz mental.
+              </p>
+            </div>
+
+            <div class="flex items-center space-x-4">
+              <!-- Dynamic Button -->
+              <a href="#cuentas" id="hero-cta" class="bg-fb-green hover:bg-fb-darkgreen text-white font-bold px-6 py-3 rounded-lg shadow-lg hover:shadow-fb-green/30 transition-all text-sm leading-none flex items-center gap-2">
+                <span data-translate="hero_btn1">Abre tu Cuenta Ahora</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+              </a>
+
+              <!-- Dot Indicators -->
+              <div class="flex space-x-2.5 ml-6">
+                <button onclick="setSlide(0)" class="w-3.5 h-3.5 rounded-full border-2 border-white bg-white transition-all cursor-pointer" id="slide-dot-0"></button>
+                <button onclick="setSlide(1)" class="w-3.5 h-3.5 rounded-full border-2 border-white bg-transparent hover:bg-white/30 transition-all cursor-pointer" id="slide-dot-1"></button>
+                <button onclick="setSlide(2)" class="w-3.5 h-3.5 rounded-full border-2 border-white bg-transparent hover:bg-white/30 transition-all cursor-pointer" id="slide-dot-2"></button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Floating Interactive FirstBank Login (5 cols) -->
+          <div class="lg:col-span-5 w-full z-20">
+            <div id="login-container-box" class="bg-white/95 backdrop-blur rounded-2xl shadow-2xl p-6 border border-white/50 w-full transition-all duration-300 transform scale-100 hover:shadow-fb-green/10">
+              
+              <!-- Tabs Personal / Negocio -->
+              <div class="grid grid-cols-2 bg-gray-100 p-1 rounded-xl mb-5">
+                <button onclick="switchLoginTab('personal')" id="tab-btn-personal" class="bg-white text-fb-charcoal font-bold text-xs py-2.5 rounded-lg shadow-sm transition-all text-center">
+                  <i class="fa-solid fa-user mr-1.5 text-fb-green"></i>
+                  <span data-translate="login_tab_personal">Personal</span>
+                </button>
+                <button onclick="switchLoginTab('comercial')" id="tab-btn-comercial" class="text-gray-400 hover:text-fb-charcoal font-bold text-xs py-2.5 rounded-lg transition-all text-center">
+                  <i class="fa-solid fa-briefcase mr-1.5"></i>
+                  <span data-translate="login_tab_comercial">Comercial</span>
+                </button>
+              </div>
+
+              <!-- Title -->
+              <h2 class="font-display font-extrabold text-lg text-fb-charcoal mb-4 flex items-center justify-between">
+                <span id="login-form-title" data-translate="login_title">Conéctate a Tu Banca Digital</span>
+                <span class="flex h-2 w-2 relative">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-fb-green"></span>
+                </span>
+              </h2>
+
+              <!-- Alerts -->
+              <div id="login-error-alert" class="hidden mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-lg flex items-center gap-1.5 font-medium">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span id="login-error-text" data-translate="login_err">Credenciales incorrectas. Verifique e intente nuevamente.</span>
+              </div>
+
+              <!-- Form -->
+              <form id="login-form" onsubmit="handleLoginSubmit(event)" class="space-y-4">
+                <!-- Username Input -->
+                <div>
+                  <label class="block text-xs font-bold text-gray-500 uppercase mb-1" id="login-label-user" data-translate="login_label_user">ID de Usuario</label>
+                  <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                      <i class="fa-solid fa-circle-user"></i>
+                    </div>
+                    <input required type="text" id="login-username" class="w-full bg-gray-50 border border-gray-200 rounded-lg py-2.5 pl-9 pr-3 text-sm focus:outline-none focus:border-fb-green focus:bg-white transition-all text-fb-charcoal" placeholder="Escriba su ID o nombre" data-translate="login_placeholder_user" />
+                  </div>
+                </div>
+
+                <!-- Password Input -->
+                <div>
+                  <label class="block text-xs font-bold text-gray-500 uppercase mb-1" data-translate="login_label_pass">Contraseña Segura</label>
+                  <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                      <i class="fa-solid fa-key"></i>
+                    </div>
+                    <input required type="password" id="login-password" class="w-full bg-gray-50 border border-gray-200 rounded-lg py-2.5 pl-9 pr-10 text-sm focus:outline-none focus:border-fb-green focus:bg-white transition-all text-fb-charcoal" placeholder="••••••••" />
+                    <!-- Show/Hide Button -->
+                    <button type="button" onclick="togglePasswordVisibility()" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-fb-green">
+                      <i id="password-eye-icon" class="fa-solid fa-eye"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Save user checkbox -->
+                <div class="flex items-center justify-between text-xs">
+                  <label class="flex items-center space-x-2 text-gray-500 cursor-pointer select-none">
+                    <input type="checkbox" class="rounded border-gray-300 text-fb-green focus:ring-fb-green" />
+                    <span data-translate="login_recordar">Recordar mi ID</span>
+                  </label>
+                  <a href="#contacto" class="text-fb-green font-semibold hover:underline" data-translate="login_forget">¿Olvidó su ID o Clave?</a>
+                </div>
+
+                <!-- Big Orange Submit Button -->
+                <button type="submit" id="login-submit-btn" class="w-full bg-fb-orange hover:bg-fb-darkorange text-white font-bold py-3.5 rounded-lg shadow-lg hover:shadow-orange-500/20 transition-all text-sm uppercase tracking-wider flex items-center justify-center gap-2">
+                  <i class="fa-solid fa-shield-halved"></i>
+                  <span data-translate="login_btn">Ingresar de forma segura</span>
+                </button>
+              </form>
+
+              <!-- Divider -->
+              <div class="relative my-5">
+                <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-150"></div></div>
+                <div class="relative flex justify-center text-xs uppercase"><span class="bg-white px-3 text-gray-400" data-translate="login_divider">¿Eres nuevo en FirstBank?</span></div>
+              </div>
+
+              <!-- Activation CTA -->
+              <div class="text-center">
+                <a href="#contacto" class="inline-block w-full border-2 border-fb-green text-fb-green hover:bg-fb-green hover:text-white font-bold py-2.5 rounded-lg text-xs tracking-wider transition-all uppercase" data-translate="login_register">
+                  Activar mi Cuenta de Banca Digital
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- TICKER DE TASAS DE INTERÉS (RATES PANELS) -->
+      <section id="tasas" class="bg-fb-lightgreen py-4 border-y border-emerald-100">
+        <div class="max-w-7xl mx-auto px-4 md:px-8">
+          <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+            <span class="font-display font-extrabold text-xs text-fb-green uppercase tracking-wider flex items-center gap-1.5 select-none shrink-0">
+              <i class="fa-solid fa-circle-exclamation animate-pulse"></i>
+              <span data-translate="rates_ticker_header">Tasas del Día de Hoy</span>:
+            </span>
+            
+            <div class="w-full overflow-x-auto hide-scrollbar flex items-center space-x-8 text-xs text-fb-charcoal select-none py-1">
+              <div class="flex items-center gap-1.5 shrink-0">
+                <span class="font-semibold" data-translate="rates_item_mort">Hipotecas Fijas 30a</span>
+                <span class="bg-fb-green text-white font-bold px-1.5 py-0.5 rounded text-[10px]">5.75% APP</span>
+              </div>
+              <div class="h-4 w-px bg-emerald-200"></div>
+              <div class="flex items-center gap-1.5 shrink-0">
+                <span class="font-semibold" data-translate="rates_item_save">Ahorros Cuenta Plus</span>
+                <span class="bg-fb-green text-white font-bold px-1.5 py-0.5 rounded text-[10px]">3.50% APY</span>
+              </div>
+              <div class="h-4 w-px bg-emerald-200"></div>
+              <div class="flex items-center gap-1.5 shrink-0">
+                <span class="font-semibold" data-translate="rates_item_auto">Auto Nuevo</span>
+                <span class="bg-fb-green text-white font-bold px-1.5 py-0.5 rounded text-[10px]">4.99% APR</span>
+              </div>
+              <div class="h-4 w-px bg-emerald-200"></div>
+              <div class="flex items-center gap-1.5 shrink-0">
+                <span class="font-semibold" data-translate="rates_item_cd">CD Especial de 12 Meses</span>
+                <span class="bg-fb-green text-white font-bold px-1.5 py-0.5 rounded text-[10px]">4.75% APY</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN ACCESOS RÁPIDOS -->
+      <section class="max-w-7xl mx-auto px-4 md:px-8 py-12">
+        <h2 class="font-display font-extrabold text-2xl text-fb-charcoal text-center mb-2" data-translate="quick_section_title">¿Qué deseas hacer hoy?</h2>
+        <p class="text-sm text-gray-500 text-center mb-8 max-w-xl mx-auto" data-translate="quick_section_desc">Accede a las operaciones financieras comunes de forma rápida y sencilla sin complicaciones.</p>
+        
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
+          <!-- Button 1 -->
+          <a href="#contacto" class="bg-white p-5 rounded-2xl hover:shadow-xl hover:shadow-fb-green/5 border border-transparent hover:border-fb-green/25 text-center flex flex-col items-center justify-center space-y-3 group transition-all duration-300 transform hover:-translate-y-1">
+            <div class="w-12 h-12 rounded-full bg-emerald-50 text-fb-green flex items-center justify-center text-lg font-bold group-hover:scale-110 group-hover:bg-fb-green group-hover:text-white transition-all shadow-sm">
+              <i class="fa-solid fa-wallet"></i>
+            </div>
+            <span class="font-bold text-xs text-gray-700 uppercase tracking-wide group-hover:text-fb-green" data-translate="quick_action1">Pagar Facturas</span>
+          </a>
+          <!-- Button 2 -->
+          <a href="#contacto" class="bg-white p-5 rounded-2xl hover:shadow-xl hover:shadow-fb-green/5 border border-transparent hover:border-fb-green/25 text-center flex flex-col items-center justify-center space-y-3 group transition-all duration-300 transform hover:-translate-y-1">
+            <div class="w-12 h-12 rounded-full bg-emerald-50 text-fb-green flex items-center justify-center text-lg font-bold group-hover:scale-110 group-hover:bg-fb-green group-hover:text-white transition-all shadow-sm">
+              <i class="fa-solid fa-mobile-screen"></i>
+            </div>
+            <span class="font-bold text-xs text-gray-700 uppercase tracking-wide group-hover:text-fb-green" data-translate="quick_action2">ATH Móvil / P2P</span>
+          </a>
+          <!-- Button 3 -->
+          <a href="#cuentas" class="bg-white p-5 rounded-2xl hover:shadow-xl hover:shadow-fb-green/5 border border-transparent hover:border-fb-green/25 text-center flex flex-col items-center justify-center space-y-3 group transition-all duration-300 transform hover:-translate-y-1">
+            <div class="w-12 h-12 rounded-full bg-emerald-50 text-fb-green flex items-center justify-center text-lg font-bold group-hover:scale-110 group-hover:bg-fb-green group-hover:text-white transition-all shadow-sm">
+              <i class="fa-solid fa-user-plus"></i>
+            </div>
+            <span class="font-bold text-xs text-gray-700 uppercase tracking-wide group-hover:text-fb-green" data-translate="quick_action3">Abrir Cuenta Online</span>
+          </a>
+          <!-- Button 4 -->
+          <a href="#prestamos" class="bg-white p-5 rounded-2xl hover:shadow-xl hover:shadow-fb-green/5 border border-transparent hover:border-fb-green/25 text-center flex flex-col items-center justify-center space-y-3 group transition-all duration-300 transform hover:-translate-y-1">
+            <div class="w-12 h-12 rounded-full bg-emerald-50 text-fb-green flex items-center justify-center text-lg font-bold group-hover:scale-110 group-hover:bg-fb-green group-hover:text-white transition-all shadow-sm">
+              <i class="fa-solid fa-comments-dollar"></i>
+            </div>
+            <span class="font-bold text-xs text-gray-700 uppercase tracking-wide group-hover:text-fb-green" data-translate="quick_action4">Solicitar Préstamo</span>
+          </a>
+          <!-- Button 5 -->
+          <a href="#contacto" class="bg-white p-5 rounded-2xl hover:shadow-xl hover:shadow-fb-green/5 border border-transparent hover:border-fb-green/25 text-center flex flex-col items-center justify-center space-y-3 col-span-2 md:col-span-1 group transition-all duration-300 transform hover:-translate-y-1">
+            <div class="w-12 h-12 rounded-full bg-emerald-50 text-fb-green flex items-center justify-center text-lg font-bold group-hover:scale-110 group-hover:bg-fb-green group-hover:text-white transition-all shadow-sm mx-auto">
+              <i class="fa-solid fa-calendar-check"></i>
+            </div>
+            <span class="font-bold text-xs text-gray-700 uppercase tracking-wide group-hover:text-fb-green block" data-translate="quick_action5">Servicios & Citas</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- INTERACTIVE FINANCES / PRODUCT SHOWCASE TABS -->
+      <section id="cuentas" class="bg-white py-16 border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 md:px-8">
+          
+          <div class="text-center max-w-2xl mx-auto mb-10">
+            <span class="text-xs font-bold text-fb-green uppercase tracking-wider block mb-2" data-translate="showcase_sub">Soluciones Financieras Hechas Para Ti</span>
+            <h2 class="font-display font-extrabold text-2xl md:text-3xl text-fb-charcoal" data-translate="showcase_title">Descubre nuestros productos estrella</h2>
+          </div>
+
+          <!-- Tabs Grid Navigation -->
+          <div class="flex justify-center border-b border-gray-200 mb-8 max-w-xl mx-auto">
+            <button onclick="setProductTab('cuentas')" id="prod-tab-cuentas" class="px-6 py-3 font-semibold text-sm border-b-2 border-fb-green text-fb-green focus:outline-none transition-all flex items-center gap-1.5">
+              <i class="fa-solid fa-vault"></i>
+              <span data-translate="prod_tab_c">Cuentas</span>
+            </button>
+            <button onclick="setProductTab('tarjetas')" id="prod-tab-tarjetas" class="px-6 py-3 font-semibold text-sm border-b-2 border-transparent text-gray-400 hover:text-fb-charcoal focus:outline-none transition-all flex items-center gap-1.5">
+              <i class="fa-solid fa-credit-card"></i>
+              <span data-translate="prod_tab_t">Tarjetas de Crédito</span>
+            </button>
+            <button onclick="setProductTab('prestamos')" id="prod-tab-prestamos" class="px-6 py-3 font-semibold text-sm border-b-2 border-transparent text-gray-400 hover:text-fb-charcoal focus:outline-none transition-all flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-dollar-to-slot"></i>
+              <span data-translate="prod_tab_p">Préstamos</span>
+            </button>
+          </div>
+
+          <!-- Product Details Content Grid -->
+          <div id="product-tab-content" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Dynamically populated via javascript, initial accounts template shown below -->
+          </div>
+
+        </div>
+      </section>
+
+      <!-- INTERACTIVE MORTGAGE & LOAN CALCULATOR -->
+      <section id="tarjetas" class="bg-fb-graybg py-16 border-y border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 md:px-8">
+          
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <!-- Left Header -->
+            <div class="lg:col-span-5 space-y-6">
+              <span class="inline-block bg-fb-green/10 text-fb-green font-bold text-xs uppercase tracking-wider px-3 py-1 rounded-full" data-translate="calc_subtitle">Calculadora Inteligente</span>
+              <h2 class="font-display font-extrabold text-3xl text-fb-charcoal leading-tight" data-translate="calc_title">Calcula tu cuota hipotecaria o préstamo en tiempo real</h2>
+              <p class="text-sm text-gray-500 leading-relaxed" data-translate="calc_desc">
+                Ponemos las herramientas financieras en tus manos. Arrastra los controles de préstamo y tasa de interés para estimar instantáneamente tu pago mensual según tu presupuesto.
+              </p>
+              
+              <!-- Features -->
+              <div class="space-y-3 pt-2">
+                <div class="flex items-start gap-2.5">
+                  <div class="mt-1 w-5 h-5 rounded-full bg-fb-lightgreen text-fb-green flex items-center justify-center text-xs font-bold leading-none"><i class="fa-solid fa-check"></i></div>
+                  <p class="text-xs text-gray-600 font-medium" data-translate="calc_feat1">Visualización instantánea de amortización del principal e interés.</p>
+                </div>
+                <div class="flex items-start gap-2.5">
+                  <div class="mt-1 w-5 h-5 rounded-full bg-fb-lightgreen text-fb-green flex items-center justify-center text-xs font-bold leading-none"><i class="fa-solid fa-check"></i></div>
+                  <p class="text-xs text-gray-600 font-medium" data-translate="calc_feat2">Estimaciones basadas en tasas crediticias actuales en Puerto Rico.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Slider Controls Container -->
+            <div class="lg:col-span-7 bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-gray-150">
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <!-- Inputs Section -->
+                <div class="space-y-6">
+                  <!-- Control 1: Amount -->
+                  <div>
+                    <div class="flex justify-between items-center mb-1.5">
+                      <label class="text-xs font-bold text-gray-500 uppercase" data-translate="calc_amt_label">Monto del Préstamo</label>
+                      <span class="text-sm font-extrabold text-fb-green" id="calc-amount-label">$150,000</span>
+                    </div>
+                    <input type="range" min="10000" max="500000" step="5000" value="150000" class="w-full accent-fb-green cursor-pointer" id="calc-amount" oninput="runCalculator()" />
+                    <div class="flex justify-between text-[10px] text-gray-400 mt-1 uppercase font-semibold"><span>$10k</span><span>$500k</span></div>
+                  </div>
+
+                  <!-- Control 2: Term -->
+                  <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2" data-translate="calc_term_label">Término del Financiamiento</label>
+                    <div class="grid grid-cols-3 gap-2">
+                      <button onclick="setCalcTerm(15)" id="term-btn-15" class="py-2 border border-gray-200 hover:border-fb-green rounded-lg text-xs font-bold text-gray-600 focus:outline-none transition-all hover:bg-fb-lightgreen">15 <span data-translate="calc_years">Años</span></button>
+                      <button onclick="setCalcTerm(30)" id="term-btn-30" class="py-2 border-2 border-fb-green rounded-lg text-xs font-bold text-fb-green focus:outline-none bg-fb-lightgreen/50">30 <span data-translate="calc_years">Años</span></button>
+                      <button onclick="setCalcTerm(5)" id="term-btn-5" class="py-2 border border-gray-200 hover:border-fb-green rounded-lg text-xs font-bold text-gray-600 focus:outline-none transition-all hover:bg-fb-lightgreen">5 <span data-translate="calc_years">Años</span></button>
+                    </div>
+                  </div>
+
+                  <!-- Control 3: Interest Rate -->
+                  <div>
+                    <div class="flex justify-between items-center mb-1.5">
+                      <label class="text-xs font-bold text-gray-500 uppercase" data-translate="calc_rate_label">Tasa de Interés Hipotecario</label>
+                      <span class="text-sm font-extrabold text-fb-green" id="calc-rate-label">5.75%</span>
+                    </div>
+                    <input type="range" min="3" max="12" step="0.25" value="5.75" class="w-full accent-fb-green cursor-pointer" id="calc-rate" oninput="runCalculator()" />
+                    <div class="flex justify-between text-[10px] text-gray-400 mt-1 uppercase font-semibold"><span>3% APR</span><span>12% APR</span></div>
+                  </div>
+                </div>
+
+                <!-- Outputs Section -->
+                <div class="bg-gradient-to-br from-fb-lightgreen/70 to-emerald-50 p-6 rounded-xl text-center space-y-4 border border-emerald-100 flex flex-col justify-center max-h-[300px]">
+                  <div>
+                    <p class="text-[11px] font-bold text-fb-green uppercase tracking-wide mb-1" data-translate="calc_result_header">Estimado de Pago Mensual</p>
+                    <p class="text-4xl font-black text-fb-charcoal tracking-tight" id="calc-monthly-payment">$875.36</p>
+                    <p class="text-[10px] text-gray-400 mt-1"><span data-translate="calc_result_sub">Principal e Interés solamente</span></p>
+                  </div>
+                  
+                  <div class="border-t border-emerald-250/50 pt-3">
+                    <p class="text-xs text-gray-600 font-medium leading-relaxed" data-translate="calc_result_disclaimer">Consigue asistencia personalizada hoy mismo y formaliza tu hipoteca o préstamo personal con tasas de interés aseguradas.</p>
+                  </div>
+
+                  <a href="#contacto" class="w-full bg-fb-green hover:bg-fb-darkgreen text-white font-bold py-2.5 rounded-lg shadow-md transition-all text-xs uppercase tracking-wider" data-translate="calc_opt_btn">Saber más / Orientación</a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- APP MOBILE AND BANNER -->
+      <section id="prestamos" class="bg-fb-charcoal text-white py-16 relative overflow-hidden">
+        <div class="absolute right-0 bottom-0 top-0 w-1/3 bg-cover bg-center brightness-[0.2] opacity-40 select-none pointer-events-none hidden lg:block" style="background-image: url('https://images.unsplash.com/photo-1512428559087-560fa5ceab42?q=80&w=600');"></div>
+        <div class="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
+          
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <!-- App Content -->
+            <div class="lg:col-span-7 space-y-6">
+              <span class="inline-block bg-fb-green font-bold text-[10px] uppercase tracking-widest px-3 py-1 rounded-full text-white" data-translate="app_promo_tag">La App de Tu Banco</span>
+              <h2 class="font-display font-extrabold text-3xl md:text-4xl text-white tracking-tight leading-tight" data-translate="app_promo_title">Maneja todo tu dinero desde la palma de tu mano</h2>
+              <p class="text-gray-300 text-sm max-w-xl leading-relaxed" data-translate="app_promo_desc">
+                Descarga de forma gratuita la App de FirstBank y disfruta de transferencias instantáneas, pago directo de utilidades, depósito de cheques por foto y consulta veloz de tus estados de cuenta de la forma más segura.
+              </p>
+
+              <!-- App stats badges -->
+              <div class="flex flex-wrap items-center gap-6 pt-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-3xl font-extrabold text-fb-green">4.8</span>
+                  <div class="text-xs text-gray-400 leading-tight">
+                    <div class="text-fb-orange flex text-[10px]"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    <span data-translate="app_rating">Clasificación en App Store</span>
+                  </div>
+                </div>
+                <div class="h-8 w-px bg-gray-800 hidden sm:block"></div>
+                <div class="flex items-center gap-2">
+                  <span class="text-3xl font-extrabold text-fb-green">1M+</span>
+                  <div class="text-xs text-gray-400 leading-tight">
+                    <span class="font-bold text-gray-300">Downloads</span><br/>
+                    <span data-translate="app_downloads">Descargas en Puerto Rico</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Download Badges -->
+              <div class="flex flex-wrap items-center gap-3 pt-4">
+                <a href="#" class="bg-black hover:bg-gray-900 border border-gray-800 rounded-lg px-4 py-2 flex items-center gap-3 transition-colors text-white">
+                  <i class="fa-brands fa-apple text-2xl"></i>
+                  <div class="text-left font-sans">
+                    <p class="text-[9px] uppercase tracking-widest text-gray-400 opacity-80 leading-none">Download on</p>
+                    <p class="text-xs font-bold leading-none mt-1">App Store</p>
+                  </div>
+                </a>
+                <a href="#" class="bg-black hover:bg-gray-900 border border-gray-800 rounded-lg px-4 py-2 flex items-center gap-3 transition-colors text-white">
+                  <i class="fa-brands fa-google-play text-xl"></i>
+                  <div class="text-left font-sans">
+                    <p class="text-[9px] uppercase tracking-widest text-gray-400 opacity-80 leading-none">Get it on</p>
+                    <p class="text-xs font-bold leading-none mt-1">Google Play</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <!-- Virtual Phone Mock / QR Code (5 cols) -->
+            <div class="lg:col-span-5 flex justify-center">
+              <div class="bg-gray-900/50 p-6 rounded-3xl border border-gray-800 flex items-center space-x-6 max-w-sm">
+                <div class="w-24 h-24 bg-white p-2 rounded-2xl flex items-center justify-center shadow-lg shrink-0">
+                  <!-- Simulated Canvas QR code styling -->
+                  <div class="w-full h-full bg-cover" style="background-image: url('https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.1firstbank.com&color=028542');"></div>
+                </div>
+                <div>
+                  <h4 class="font-display font-extrabold text-sm mb-1" data-translate="qr_title">Escanea para Descargar</h4>
+                  <p class="text-xs text-gray-400 leading-relaxed" data-translate="qr_desc">Apunta la cámara de tu smartphone al código QR para instalar de forma inmediata y activar tu banca móvil hoy.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- REGION CONTACT & LOCATIONS -->
+      <section id="contacto" class="bg-white py-16 border-t border-gray-150">
+        <div class="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-1 md:grid-cols-2 gap-12">
+          <!-- Column 1: Locations Support -->
+          <div class="space-y-6">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-fb-lightgreen text-fb-green flex items-center justify-center text-lg shadow-sm"><i class="fa-solid fa-map-location-dot"></i></div>
+              <h2 class="font-display font-extrabold text-xl text-fb-charcoal" data-translate="contact_loc_title">Centros de Servicio y Sucursales</h2>
+            </div>
+            <p class="text-sm text-gray-500 leading-relaxed" data-translate="contact_loc_desc">
+              Contamos con una amplia red de sucursales en todo Puerto Rico listas para atenderte personalmente, además de más de 400 cajeros automáticos (ATMs) para que manejes tu efectivo las 24 horas del día.
+            </p>
+            <div class="flex flex-wrap gap-4 pt-3">
+              <a href="#localidades" class="bg-fb-green hover:bg-fb-darkgreen text-white font-bold px-5 py-2.5 rounded-lg text-xs tracking-wider uppercase transition-all shadow" data-translate="contact_loc_btn1">Buscar Sucursales</a>
+              <a href="#contacto" class="border border-gray-200 hover:border-fb-green text-gray-600 hover:text-fb-green font-bold px-5 py-2.5 rounded-lg text-xs tracking-wider uppercase transition-all" data-translate="contact_loc_btn2">Solicitar una Cita</a>
+            </div>
+          </div>
+
+          <!-- Column 2: Phone Hotline -->
+          <div class="space-y-6">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-fb-lightgreen text-fb-green flex items-center justify-center text-lg shadow-sm"><i class="fa-solid fa-headset"></i></div>
+              <h2 class="font-display font-extrabold text-xl text-fb-charcoal" data-translate="contact_sup_title">Centro de Contacto FirstLine</h2>
+            </div>
+            <p class="text-sm text-gray-500 leading-relaxed" data-translate="contact_sup_desc">
+              ¿Tienes dudas o necesitas reportar una tarjeta perdida? Llámanos a cualquier hora y recibe la asistencia inmediata de nuestro personal especializado en seguridad bancaria y soporte digital.
+            </p>
+            <!-- Structured Phones -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-fb-graybg p-4 rounded-xl border border-gray-150">
+              <div>
+                <p class="text-[10px] uppercase font-bold text-gray-400" data-translate="phone_meta1">Desde Puerto Rico / EEUU</p>
+                <p class="text-base font-extrabold text-fb-charcoal">787.725.2511</p>
+              </div>
+              <div>
+                <p class="text-[10px] uppercase font-bold text-gray-400" data-translate="phone_meta2">Línea Libre de Cargos</p>
+                <p class="text-base font-extrabold text-fb-charcoal">1.866.458.2511</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER SECTION -->
+    <footer class="bg-[#111111] text-gray-400 text-xs py-12 border-t-4 border-fb-green relative">
+      <div class="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+        <!-- Col 1 -->
+        <div class="space-y-3">
+          <h4 class="font-display font-extrabold text-[#fff] text-xs uppercase tracking-wider" data-translate="foot_col1_title">Cuentas y Ahorro</h4>
+          <ul class="space-y-2">
+            <li><a href="#cuentas" class="hover:text-fb-green transition-colors" data-translate="foot_item1">Cuentas Corrientes</a></li>
+            <li><a href="#cuentas" class="hover:text-fb-green transition-colors" data-translate="foot_item2">Cuentas de Ahorro</a></li>
+            <li><a href="#cuentas" class="hover:text-fb-green transition-colors" data-translate="foot_item3">Certificados de Depósito (CD)</a></li>
+            <li><a href="#cuentas" class="hover:text-fb-green transition-colors" data-translate="foot_item4">Banca Online de Libre Costo</a></li>
+          </ul>
+        </div>
+        <!-- Col 2 -->
+        <div class="space-y-3">
+          <h4 class="font-display font-extrabold text-[#fff] text-xs uppercase tracking-wider" data-translate="foot_col2_title">Financiamiento</h4>
+          <ul class="space-y-2">
+            <li><a href="#tarjetas" class="hover:text-fb-green transition-colors" data-translate="foot_item5">Tarjetas de Crédito Beyond</a></li>
+            <li><a href="#prestamos" class="hover:text-fb-green transition-colors" data-translate="foot_item6">Préstamos Personales</a></li>
+            <li><a href="#prestamos" class="hover:text-fb-green transition-colors" data-translate="foot_item7">Hipotecas | FirstMortgage</a></li>
+            <li><a href="#prestamos" class="hover:text-fb-green transition-colors" data-translate="foot_item8">Préstamos de Autos</a></li>
+          </ul>
+        </div>
+        <!-- Col 3 -->
+        <div class="space-y-3">
+          <h4 class="font-display font-extrabold text-[#fff] text-xs uppercase tracking-wider" data-translate="foot_col3_title">Servicios Digitales</h4>
+          <ul class="space-y-2">
+            <li><a href="#contacto" class="hover:text-fb-green transition-colors" data-translate="foot_item9">Banca por Internet Personal</a></li>
+            <li><a href="#contacto" class="hover:text-fb-green transition-colors" data-translate="foot_item10">Banca por Internet Comercial</a></li>
+            <li><a href="#contacto" class="hover:text-fb-green transition-colors" data-translate="foot_item11">ATH Móvil Personal</a></li>
+            <li><a href="#contacto" class="hover:text-fb-green transition-colors" data-translate="foot_item12">Pago Directo de Facturas</a></li>
+          </ul>
+        </div>
+        <!-- Col 4 -->
+        <div class="space-y-4">
+          <h4 class="font-display font-extrabold text-[#fff] text-xs uppercase tracking-wider" data-translate="foot_col4_title">FirstBank Social</h4>
+          <div class="flex items-center space-x-3.5 pt-1">
+            <a href="#" class="w-8 h-8 rounded-full bg-gray-800 text-white flex items-center justify-center hover:bg-fb-green hover:text-white transition-all text-sm"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="w-8 h-8 rounded-full bg-gray-800 text-white flex items-center justify-center hover:bg-fb-green hover:text-white transition-all text-sm"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#" class="w-8 h-8 rounded-full bg-gray-800 text-white flex items-center justify-center hover:bg-fb-green hover:text-white transition-all text-sm"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="#" class="w-8 h-8 rounded-full bg-gray-800 text-white flex items-center justify-center hover:bg-fb-green hover:text-white transition-all text-sm"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+          <!-- Miembro FDIC Badge & Equal Housing Lender SVG -->
+          <div class="flex items-center space-x-4 pt-2">
+            <div class="bg-gray-800 hover:bg-gray-700 font-bold text-[10px] text-white px-3 py-1.5 rounded transition-all select-none">
+              FDIC
+            </div>
+            <div class="bg-gray-800 hover:bg-gray-700 text-white p-1.5 rounded flex items-center gap-1 text-[10px] font-bold transition-all select-none">
+              <i class="fa-solid fa-house-chimney text-[10px]"></i>
+              <span>LENDER</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Legal disclaimer copy -->
+      <div class="max-w-7xl mx-auto px-4 md:px-8 border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-500 text-[10px] select-none text-center md:text-left">
+        <div class="space-y-1 max-w-4xl">
+          <p id="foot-legal-1" data-translate="foot_legal_1">FirstBank Puerto Rico es un Miembro FDIC. Todos los productos y servicios están sujetos a la aprobación final de crédito y verificación de fondos. Ciertos cargos e intereses podrían aplicar según su contrato y regulaciones locales.</p>
+          <p id="foot-legal-2" data-translate="foot_legal_2">© 2026 FirstBank Puerto Rico. Todos los derechos reservados. San Juan, Puerto Rico.</p>
+        </div>
+        <div class="flex flex-wrap items-center justify-center gap-4 font-semibold text-gray-450 text-[11px]">
+          <a href="#" class="hover:text-fb-green" data-translate="foot_pol1">Políticas de Privacidad</a>
+          <span class="text-gray-800">|</span>
+          <a href="#" class="hover:text-fb-green" data-translate="foot_pol2">Seguridad en Línea</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT (CAROUSEL, TABS, TRANSLATOR, PORTAL STATE ENGINE) -->
+    <script>
+      // CENTRAL TRANSLATION DICTIONARY
+      const translations = {
+        es: {
+          nav_personal: "Personal",
+          nav_negocios: "Negocios",
+          nav_corp: "Corporativo",
+          nav_nosotros: "Nosotros",
+          top_localidades: "Localidades",
+          top_contacto: "Contáctanos",
+          menu_cuentas: "Cuentas",
+          menu_tarjetas: "Tarjetas",
+          menu_prestamos: "Préstamos",
+          menu_inversiones: "Inversiones",
+          menu_seguros: "Seguros",
+          menu_servicios: "Servicios",
+          menu_tasas: "Ver Tasas",
+          menu_banca: "Banca por Internet",
+          dash_header: "Tu Banca Digital | FirstBank",
+          dash_welcome: "Bienvenido,",
+          dash_logout: "Cerrar Sesión",
+          dash_check_acc: "Cuenta de Cheques First Plus",
+          dash_acc_avail: "Disponible para transacciones",
+          dash_save_acc: "Ahorros Especiales",
+          dash_save_apy: "Interés acumulado esta mensualidad",
+          dash_card_acc: "Tarjeta Beyond Visa",
+          dash_card_limit: "Límite disponible",
+          dash_recent: "Transacciones Recientes",
+          dash_sync: "Sincronizado hace un momento",
+          dash_send_header: "Transferir Dinero & Pagar",
+          dash_origin: "Origen de Fondos",
+          dash_origin_opt: "Cuenta Cheques First Plus ($4,258.91)",
+          dash_origin_opt2: "Cuenta Ahorros Especiales ($12,850.44)",
+          dash_dest: "Destinatario / Pago",
+          dash_dest_holder: "Nombre completo, celular o número de cuenta",
+          dash_amount: "Cantidad ($)",
+          dash_concept: "Concepto",
+          dash_concept_holder: "Regalo, Pago, Almuerzo",
+          dash_btn_trans: "Enviar Dinero de Forma Segura",
+          dash_sucess: "Transacción Exitosa",
+          dash_success_sub: "Los fondos de su cuenta de FirstPlus han sido transferidos correctamente utilizando encriptación bancaria SSL 256 bits.",
+          dash_disclaimer: "Primera Institución Autorizada bajo las leyes bancarias de Puerto Rico. Licencia #31.© 2026 FirstBank Puerto Rico. Miembro FDIC. Equal Housing Lender.",
+          hero_tag1: "Banca 100% Segura",
+          hero_title1: "Llega más lejos con tu Cuenta de Ahorro",
+          hero_desc1: "Abre tu cuenta hoy con 0 cargos mensuales y accede a una de las mejores tasas de rendimiento en Puerto Rico para hacer crecer tus ahorros con paz mental.",
+          hero_btn1: "Abre tu Cuenta Ahora",
+          hero_tag2: "Devoluciones Instantáneas",
+          hero_title2: "La Tarjeta Beyond con Cash Back Real",
+          hero_desc2: "Obtén hasta un 3% de Cash Back ilimitado en todas tus compras del mes. Disfruta de la mejor tasa promocional inicial sin cargos anuales obligatorios.",
+          hero_btn2: "Solicita tu Tarjeta",
+          hero_tag3: "Hogar Dulce Hogar",
+          hero_title3: "Consigue la casa que deseas con FirstMortgage",
+          hero_desc3: "Orientación gratuita en línea con expertos hipotecarios. Consigue la aprobación de forma ágil y tasas fijas estables en Puerto Rico.",
+          hero_btn3: "Ver ofertas de Hipotecas",
+          login_tab_personal: "Personal",
+          login_tab_comercial: "Comercial",
+          login_title: "Conéctate a Tu Banca Digital",
+          login_err: "Credenciales incorrectas. Verifique e intente nuevamente.",
+          login_label_user: "ID de Usuario",
+          login_label_pass: "Contraseña Segura",
+          login_placeholder_user: "Escriba su ID o nombre",
+          login_recordar: "Recordar mi ID",
+          login_forget: "¿Olvidó su ID o Clave?",
+          login_btn: "Ingresar de forma segura",
+          login_divider: "¿Eres nuevo en FirstBank?",
+          login_register: "Activar mi Cuenta de Banca Digital",
+          rates_ticker_header: "Tasas del Día de Hoy",
+          rates_item_mort: "Hipotecas Fijas 30a",
+          rates_item_save: "Ahorros Cuenta Plus",
+          rates_item_auto: "Auto Nuevo",
+          rates_item_cd: "CD Especial de 12 Meses",
+          quick_section_title: "¿Qué deseas hacer hoy?",
+          quick_section_desc: "Accede a las operaciones financieras comunes de forma rápida y sencilla sin complicaciones.",
+          quick_action1: "Pagar Facturas",
+          quick_action2: "ATH Móvil / P2P",
+          quick_action3: "Abrir Cuenta Online",
+          quick_action4: "Solicitar Préstamo",
+          quick_action5: "Servicios & Citas",
+          showcase_sub: "Soluciones Financieras Hechas Para Ti",
+          showcase_title: "Descubre nuestros productos estrella",
+          prod_tab_c: "Cuentas",
+          prod_tab_t: "Tarjetas de Crédito",
+          prod_tab_p: "Préstamos",
+          calc_subtitle: "Calculadora Inteligente",
+          calc_title: "Calcula tu cuota hipotecaria o préstamo en tiempo real",
+          calc_desc: "Ponemos las herramientas financieras en tus manos. Arrastra los controles de préstamo y tasa de interés para estimar instantáneamente tu pago mensual según tu presupuesto.",
+          calc_feat1: "Visualización instantánea de amortización del principal e interés.",
+          calc_feat2: "Estimaciones basadas en tasas crediticias actuales en Puerto Rico.",
+          calc_amt_label: "Monto del Préstamo",
+          calc_term_label: "Término del Financiamiento",
+          calc_rate_label: "Tasa de Interés Hipotecario",
+          calc_years: "Años",
+          calc_result_header: "Estimado de Pago Mensual",
+          calc_result_sub: "Principal e Interés solamente",
+          calc_result_disclaimer: "Consigue asistencia personalizada hoy mismo y formaliza tu hipoteca o préstamo personal con tasas de interés aseguradas.",
+          calc_opt_btn: "Saber más / Orientación",
+          app_promo_tag: "La App de Tu Banco",
+          app_promo_title: "Maneja todo tu dinero desde la palma de tu mano",
+          app_promo_desc: "Descarga de forma gratuita la App de FirstBank y disfruta de transferencias instantáneas, pago directo de utilidades, depósito de cheques por foto y consulta veloz de tus estados de cuenta de la forma más segura.",
+          app_rating: "Clasificación en App Store",
+          app_downloads: "Descargas en Puerto Rico",
+          qr_title: "Escanea para Descargar",
+          qr_desc: "Apunta la cámara de tu smartphone al código QR para instalar de forma inmediata y activar tu banca móvil hoy.",
+          contact_loc_title: "Centros de Servicio y Sucursales",
+          contact_loc_desc: "Contamos con una amplia red de sucursales en todo Puerto Rico listas para atenderte personalmente, además de más de 400 cajeros automáticos (ATMs) para que manejes tu efectivo las 24 horas del día.",
+          contact_loc_btn1: "Buscar Sucursales",
+          contact_loc_btn2: "Solicitar una Cita",
+          contact_sup_title: "Centro de Contacto FirstLine",
+          contact_sup_desc: "¿Tienes dudas o necesitas reportar una tarjeta perdida? Llámanos a cualquier hora y recibe la asistencia inmediata de nuestro personal especializado en seguridad bancaria y soporte digital.",
+          phone_meta1: "Desde Puerto Rico / EEUU",
+          phone_meta2: "Línea Libre de Cargos",
+          foot_col1_title: "Cuentas y Ahorro",
+          foot_item1: "Cuentas Corrientes",
+          foot_item2: "Cuentas de Ahorro",
+          foot_item3: "Certificados de Depósito (CD)",
+          foot_item4: "Banca Online de Libre Costo",
+          foot_col2_title: "Financiamiento",
+          foot_item5: "Tarjetas de Crédito Beyond",
+          foot_item6: "Préstamos Personales",
+          foot_item7: "Hipotecas | FirstMortgage",
+          foot_item8: "Préstamos de Autos",
+          foot_col3_title: "Servicios Digitales",
+          foot_item9: "Banca por Internet Personal",
+          foot_item10: "Banca por Internet Comercial",
+          foot_item11: "ATH Móvil Personal",
+          foot_item12: "Pago Directo de Facturas",
+          foot_col4_title: "FirstBank Social",
+          foot_legal_1: "FirstBank Puerto Rico es un Miembro FDIC. Todos los productos y servicios están sujetos a la aprobación final de crédito y verificación de fondos. Ciertos cargos e intereses podrían aplicar según su contrato y regulaciones locales.",
+          foot_legal_2: "© 2026 FirstBank Puerto Rico. Todos los derechos reservados. San Juan, Puerto Rico.",
+          foot_pol1: "Políticas de Privacidad",
+          foot_pol2: "Seguridad en Línea"
+        },
+        en: {
+          nav_personal: "Personal",
+          nav_negocios: "Business",
+          nav_corp: "Corporate",
+          nav_nosotros: "About Us",
+          top_localidades: "Locations",
+          top_contacto: "Contact Us",
+          menu_cuentas: "Accounts",
+          menu_tarjetas: "Cards",
+          menu_prestamos: "Loans",
+          menu_inversiones: "Investments",
+          menu_seguros: "Insurance",
+          menu_servicios: "Services",
+          menu_tasas: "View Rates",
+          menu_banca: "Online Banking",
+          dash_header: "Your Digital Banking | FirstBank",
+          dash_welcome: "Welcome,",
+          dash_logout: "Sign Out",
+          dash_check_acc: "First Plus Checking Account",
+          dash_acc_avail: "Available for transactions",
+          dash_save_acc: "Special Savings",
+          dash_save_apy: "Interest accrued this cycle",
+          dash_card_acc: "Beyond Visa Card",
+          dash_card_limit: "Available limit",
+          dash_recent: "Recent Transactions",
+          dash_sync: "Synced just now",
+          dash_send_header: "Transfer Funds & Pay Bills",
+          dash_origin: "Origin of Funds",
+          dash_origin_opt: "First Plus Checking Account ($4,258.91)",
+          dash_origin_opt2: "Special Savings Account ($12,850.44)",
+          dash_dest: "Beneficiary / Payee",
+          dash_dest_holder: "Full name, cell number or account number",
+          dash_amount: "Amount ($)",
+          dash_concept: "Memo / Concept",
+          dash_concept_holder: "Gift, Payment, Dinner",
+          dash_btn_trans: "Send Money Securely",
+          dash_sucess: "Transaction Success",
+          dash_success_sub: "The funds from your FirstPlus account have been correctly transferred using secure 256-bit SSL encryption.",
+          dash_disclaimer: "Primary Authorized Institution under Puerto Rico banking acts. License #31.© 2026 FirstBank Puerto Rico. Member FDIC. Equal Housing Lender.",
+          hero_tag1: "100% Secure Banking",
+          hero_title1: "Go further with your Savings Account",
+          hero_desc1: "Open your custody account today with zero monthly charges and gain access to one of the highest interest yields in Puerto Rico.",
+          hero_btn1: "Open Your Account Now",
+          hero_tag2: "Instant Cashback Rewards",
+          hero_title2: "The Beyond Card with Real Cashback",
+          hero_desc2: "Enjoy up to 3% unlimited Cash Back on all purchases of the month. Take advantage of our low introductory interest promotional rate.",
+          hero_btn2: "Apply for Custom Card",
+          hero_tag3: "Home Sweet Home",
+          hero_title3: "Buy the home of your dreams with FirstMortgage",
+          hero_desc3: "Claim your free online evaluation with our mortgage specialists. Secure stable rates and fast closings across PR.",
+          hero_btn3: "Explore Mortgage Offers",
+          login_tab_personal: "Personal",
+          login_tab_comercial: "Commercial",
+          login_title: "Log in to Your Digital Banking",
+          login_err: "Incorrect credentials. Verify and please try again.",
+          login_label_user: "User ID",
+          login_label_pass: "Secure Password",
+          login_placeholder_user: "Enter your customer ID / name",
+          login_recordar: "Save my login ID",
+          login_forget: "Forgot ID or Password?",
+          login_btn: "Log in securely",
+          login_divider: "Are you new to FirstBank?",
+          login_register: "Activate Digital Banking Account",
+          rates_ticker_header: "Today's Yield Rates",
+          rates_item_mort: "30-Year Fixed Mortgage",
+          rates_item_save: "Plus Savings Accounts",
+          rates_item_auto: "New Vehicles",
+          rates_item_cd: "12-Month Custom Certificate of Deposit",
+          quick_section_title: "What would you like to achieve today?",
+          quick_section_desc: "Quickly access common banking workflows seamlessly and without any obstacles.",
+          quick_action1: "Pay Bills",
+          quick_action2: "ATH Móvil / P2P",
+          quick_action3: "Open Account Online",
+          quick_action4: "Apply for Loan",
+          quick_action5: "Branches & Appointments",
+          showcase_sub: "Custom Wealth Solutions Built For You",
+          showcase_title: "Explore our outstanding products",
+          prod_tab_c: "Accounts",
+          prod_tab_t: "Credit Cards",
+          prod_tab_p: "Loans",
+          calc_subtitle: "Smart Calculator",
+          calc_title: "Estimate your mortgage or loan payments in real time",
+          calc_desc: "We bring financial utilities straight to your screens. Instantly estimate monthly mortgage or personal loan rates to balance your household budget.",
+          calc_feat1: "Instant transparency over principal and interest values.",
+          calc_feat2: "Evaluated using standard market ratings in PR.",
+          calc_amt_label: "Requested Loan Amount",
+          calc_term_label: "Financing Terms and Schedule",
+          calc_rate_label: "Mortgage Interest Rate",
+          calc_years: "Years",
+          calc_result_header: "Estimated Monthly Installment",
+          calc_result_sub: "Principal and Interest margins only",
+          calc_result_disclaimer: "Request immediate support to formalize your home mortgages or loans at locked promotional rates.",
+          calc_opt_btn: "Verify Rates / Connect Support",
+          app_promo_tag: "Your Mobile Banking App",
+          app_promo_title: "Control all your accounts on the move",
+          app_promo_desc: "Download the FirstBank App. Safely enjoy instant payments, paper check snapshot deposits, bill payments, and smart biometric protection.",
+          app_rating: "App Store Rating",
+          app_downloads: "Total Downloads in PR",
+          qr_title: "Scan to Install App",
+          qr_desc: "Align your phone camera lens to download and activate your digital banking app instantly.",
+          contact_loc_title: "Local Branches and Service Hubs",
+          contact_loc_desc: "We are available all over Puerto Rico with customer service hubs, plus over 400 modern cash-handling ATMs open 24/7.",
+          contact_loc_btn1: "Locate Branches",
+          contact_loc_btn2: "Request Support Appointment",
+          contact_sup_title: "FirstLine Helpline",
+          contact_sup_desc: "Have some questions? Give us a call any time of day for custom assistance regarding account safety and lost cards.",
+          phone_meta1: "PR / United States Regional",
+          phone_meta2: "Domestic Toll-Free Line",
+          foot_col1_title: "Accounts & Savings",
+          foot_item1: "Standard Checking Accounts",
+          foot_item2: "Yield Savings Accounts",
+          foot_item3: "Certificates of Deposit (CD)",
+          foot_item4: "Completely Free Online Banking",
+          foot_col2_title: "Funding & Credit",
+          foot_item5: "Beyond Custom Credit Cards",
+          foot_item6: "Unsecured Personal Funding",
+          foot_item7: "Residential Mortgages | FirstMortgage",
+          foot_item8: "Automobile Finance Solutions",
+          foot_col3_title: "Digital Ecosystem",
+          foot_item9: "Personal Online Banking",
+          foot_item10: "Commercial Digital Portals",
+          foot_item11: "ATH Móvil Personal P2P",
+          foot_item12: "Automatic Utilities Pay",
+          foot_col4_title: "FirstBank Social",
+          foot_legal_1: "FirstBank Puerto Rico is a Member of the FDIC. All products require final credit underwriting. Custom interest margins and fee schedules apply conformant to legal statutes.",
+          foot_legal_2: "© 2026 FirstBank Puerto Rico. All rights reserved. San Juan, Puerto Rico.",
+          foot_pol1: "Privacy guidelines",
+          foot_pol2: "Online Security Guidelines"
+        }
+      };
+
+      let currentLang = 'es';
+
+      function toggleLang() {
+        currentLang = currentLang === 'es' ? 'en' : 'es';
+        document.getElementById('lang-btn-text').innerText = currentLang === 'es' ? 'English' : 'Español';
+        applyTranslations();
+        renderProducts(); // Refresh active products translation
+        runCalculator(); // Refresh calculator labels
+      }
+
+      function applyTranslations() {
+        document.querySelectorAll('[data-translate]').forEach(el => {
+          const key = el.getAttribute('data-translate');
+          if (translations[currentLang][key]) {
+            if (el.tagName === 'INPUT' && el.placeholder) {
+              el.placeholder = translations[currentLang][key];
+            } else {
+              el.innerHTML = translations[currentLang][key];
+            }
+          }
+        });
+      }
+
+
+      // MOBILE MENU CONTROLLER
+      function toggleMobileMenu() {
+        const menu = document.getElementById('mobile-menu');
+        const icon = document.getElementById('menu-icon-bars');
+        menu.classList.toggle('hidden');
+        if (menu.classList.contains('hidden')) {
+          icon.className = 'fa-solid fa-bars';
+        } else {
+          icon.className = 'fa-solid fa-xmark';
+        }
+      }
+
+
+      // BANNER PORTAL STATE MANAGEMENT (LOGIN MOCK)
+      let activeLoginTab = 'personal';
+
+      function switchLoginTab(tab) {
+        activeLoginTab = tab;
+        const personalBtn = document.getElementById('tab-btn-personal');
+        const comercialBtn = document.getElementById('tab-btn-comercial');
+        const labelUser = document.getElementById('login-label-user');
+        
+        if (tab === 'comercial') {
+          personalBtn.className = "text-gray-400 hover:text-fb-charcoal font-bold text-xs py-2.5 rounded-lg transition-all text-center";
+          personalBtn.querySelector('i').classList.replace('text-fb-green', 'text-gray-400');
+          comercialBtn.className = "bg-white text-fb-charcoal font-bold text-xs py-2.5 rounded-lg shadow-sm transition-all text-center";
+          comercialBtn.querySelector('i').className = "fa-solid fa-briefcase mr-1.5 text-fb-green";
+          labelUser.innerText = currentLang === 'es' ? 'ID Comercial' : 'Company ID';
+        } else {
+          comercialBtn.className = "text-gray-400 hover:text-fb-charcoal font-bold text-xs py-2.5 rounded-lg transition-all text-center";
+          comercialBtn.querySelector('i').classList.remove('text-fb-green');
+          personalBtn.className = "bg-white text-fb-charcoal font-bold text-xs py-2.5 rounded-lg shadow-sm transition-all text-center";
+          personalBtn.querySelector('i').className = "fa-solid fa-user mr-1.5 text-fb-green";
+          labelUser.innerText = currentLang === 'es' ? 'ID de Usuario' : 'User ID';
+        }
+      }
+
+      function togglePasswordVisibility() {
+        const passInput = document.getElementById('login-password');
+        const icon = document.getElementById('password-eye-icon');
+        if (passInput.type === 'password') {
+          passInput.type = 'text';
+          icon.className = 'fa-solid fa-eye-slash text-fb-green';
+        } else {
+          passInput.type = 'password';
+          icon.className = 'fa-solid fa-eye';
+        }
+      }
+
+      function focusLogin() {
+        // Highlighting log-in card
+        const card = document.getElementById('login-container-box');
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        card.classList.add('ring-4', 'ring-fb-green/30');
+        setTimeout(() => {
+          card.classList.remove('ring-4', 'ring-fb-green/30');
+        }, 1500);
+      }
+
+      function handleLoginSubmit(event) {
+        event.preventDefault();
+        const user = document.getElementById('login-username').value;
+        const pass = document.getElementById('login-password').value;
+        const alertBox = document.getElementById('login-error-alert');
+        const submitBtn = document.getElementById('login-submit-btn');
+
+        // Simple mock safety validation
+        if (user.trim().length < 3 || pass.length < 4) {
+          alertBox.classList.remove('hidden');
+          return;
+        }
+
+        alertBox.classList.add('hidden');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<i class="fa-solid fa-circle-notch animate-spin mr-2"></i> ${currentLang === 'es' ? 'Verificando...' : 'Verifying...'}`;
+
+        // Simulate safe secure cloud connection
+        setTimeout(() => {
+          document.getElementById('dash-username-display').innerText = user;
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = `<i class="fa-solid fa-shield-halved mr-1.5"></i> ${currentLang === 'es' ? 'Ingresar de forma segura' : 'Log in securely'}`;
+          
+          // Render dashboard view portal
+          document.getElementById('homepage-body').classList.add('hidden');
+          document.getElementById('dashboard-portal').classList.remove('hidden');
+          window.scrollTo({ top: 0, behavior: 'instant'});
+        }, 1500);
+      }
+
+      function logoutPortal() {
+        document.getElementById('dashboard-portal').classList.add('hidden');
+        document.getElementById('homepage-body').classList.remove('hidden');
+        // Reset password fields
+        document.getElementById('login-password').value = '';
+        window.scrollTo({ top: 0, behavior: 'instant'});
+      }
+
+      function executeMockTransfer(event) {
+        event.preventDefault();
+        const dest = document.getElementById('transfer-to').value;
+        const amount = document.getElementById('transfer-val').value;
+        const feedback = document.getElementById('transfer-feedback');
+        
+        feedback.classList.remove('hidden');
+        document.getElementById('transfer-success-msg').innerHTML = currentLang === 'es' 
+          ? `Su transferencia de <strong>$${amount}</strong> a <strong>${dest}</strong> fue completada con éxito.`
+          : `Your transfer of <strong>$${amount}</strong> to <strong>${dest}</strong> was completed successfully.`;
+        
+        // Reset values
+        document.getElementById('transfer-to').value = '';
+        document.getElementById('transfer-val').value = '';
+        document.getElementById('transfer-memo').value = '';
+
+        setTimeout(() => {
+          feedback.classList.add('hidden');
+        }, 6000);
+      }
+
+
+      // HERO MULTI CAROUSEL ENGINE
+      const sliderSlides = [
+        {
+          tag: { es: "Banca 100% Segura", en: "100% Secure Banking" },
+          title: { es: "Llega más lejos con tu Cuenta de Ahorro", en: "Go further with your Savings Account" },
+          desc: { es: "Abre tu cuenta hoy con 0 cargos mensuales y accede a una de las mejores tasas de rendimiento en Puerto Rico.", en: "Open your custody account today with zero monthly fees and gain access to the leading industry yields in Puerto Rico." },
+          btn: { es: "Abre tu Cuenta Ahora", en: "Open Your Account Now" },
+          href: "#cuentas"
+        },
+        {
+          tag: { es: "Devoluciones Instantáneas", en: "Instant Cashback Rewards" },
+          title: { es: "La Tarjeta Beyond con Cash Back Real", en: "The Beyond Card with Real Cashback" },
+          desc: { es: "Obtén hasta un 3% de Cash Back ilimitado en todas tus compras del mes. Disfruta de la mejor tasa promocional inicial.", en: "Enjoy up to 3% unlimited Cash Back on all purchases of the month. Take advantage of our low introductory promotional interest ratings." },
+          btn: { es: "Solicita tu Tarjeta", en: "Apply for Custom Card" },
+          href: "#cuentas"
+        },
+        {
+          tag: { es: "Hogar Dulce Hogar", en: "Home Sweet Home" },
+          title: { es: "Consigue la casa que deseas con FirstMortgage", en: "Get the house you desire with FirstMortgage" },
+          desc: { es: "Orientación gratuita en línea con expertos hipotecarios. Consigue la aprobación de forma ágil y tasas fijas estables.", en: "Claim your free online evaluation with our mortgage specialists. Secure stable rates and fast closings across PR." },
+          btn: { es: "Ver ofertas de Hipotecas", en: "Explore Mortgage Offers" },
+          href: "#cuentas"
+        }
+      ];
+
+      let currentSlide = 0;
+      let slideInterval;
+
+      function startSlideShow() {
+        slideInterval = setInterval(() => {
+          setSlide((currentSlide + 1) % sliderSlides.length);
+        }, 5000);
+      }
+
+      function stopSlideShow() {
+        clearInterval(slideInterval);
+      }
+
+      function setSlide(index) {
+        currentSlide = index;
+        
+        // update images opacity
+        const images = document.getElementById('slide-container').children;
+        for (let i = 0; i < images.length; i++) {
+          if (i === index) {
+            images[i].classList.replace('opacity-0', 'opacity-100');
+          } else {
+            images[i].classList.replace('opacity-100', 'opacity-0');
+          }
+        }
+
+        // update dots
+        for (let i = 0; i < 3; i++) {
+          const dot = document.getElementById(`slide-dot-${i}`);
+          if (i === index) {
+            dot.className = "w-3.5 h-3.5 rounded-full border-2 border-white bg-white transition-all cursor-pointer";
+          } else {
+            dot.className = "w-3.5 h-3.5 rounded-full border-2 border-white bg-transparent hover:bg-white/30 transition-all cursor-pointer";
+          }
+        }
+
+        // update text content
+        const slideData = sliderSlides[index];
+        document.getElementById('hero-tag').innerText = slideData.tag[currentLang];
+        document.getElementById('hero-title').innerText = slideData.title[currentLang];
+        document.getElementById('hero-desc').innerText = slideData.desc[currentLang];
+        document.getElementById('hero-cta').querySelector('span').innerText = slideData.btn[currentLang];
+        document.getElementById('hero-cta').href = slideData.href;
+      }
+
+
+      // PRODUCT TABS ENGINE
+      let activeProductTab = 'cuentas';
+      
+      const dbProducts = {
+        cuentas: [
+          {
+            title: { es: "Cuenta First Plus", en: "First Plus Account" },
+            desc: { es: "Nuestra cuenta de cheques predilecta. Recibe tu chequera gratis y depósitos directos fáciles.", en: "Checking accounts matching your daily needs. Premium welcome checkbooks and easy payroll integration." },
+            rate: { es: "0 Cargos Mensuales", en: "0 Maintenance Fees" },
+            badge: { es: "Popular", en: "Highly Demanded" },
+            features: [
+              { es: "Sin balance mínimo requerido", en: "No minimum balance constraints" },
+              { es: "Tarjeta de débito con protección chip integrada", en: "EMV Chip protected debit card included" },
+              { es: "Acceso ilimitado a banca móvil", en: "Unlimited digital app monitoring" }
+            ]
+          },
+          {
+            title: { es: "Ahorro Especial", en: "Special Savings" },
+            desc: { es: "La vía ideal para acumular intereses y guardar el dinero para tus planes futuros de manera protegida.", en: "Watch your liquidity grow automatically using high promotional yield interest brackets." },
+            rate: "3.50% APY",
+            badge: { es: "Seguro", en: "Secure Yield" },
+            features: [
+              { es: "Intereses calculados sobre balance diario", en: "Interests compounded over daily balances" },
+              { es: "Hasta 6 retiros electrónicos mensuales gratis", en: "Up to 6 electronic transfers free of charge" },
+              { es: "Protegido por el fondo federal FDIC", en: "Protected up to legally approved FDIC limits" }
+            ]
+          },
+          {
+            title: { es: "Cuenta de Ahorro Kids & Youth", en: "Kids & Youth Savings" },
+            desc: { es: "Fomenta la salud financiera desde temprano. Cuenta con incentivos por ahorros periódicos.", en: "Promote financial health in early age cycles with special milestone savings initiatives." },
+            rate: "1.25% APY",
+            badge: { es: "Educación", en: "Growth Habits" },
+            features: [
+              { es: "Creado para menores de 18 años", en: "Built explicitly for youths under 18" },
+              { es: "Apertura fácil con solo $10", en: "Easy start starting with initial $10" },
+              { es: "Sin cargos por inactividad", en: "We wave any standard inactivity charges" }
+            ]
+          }
+        ],
+        tarjetas: [
+          {
+            title: { es: "Tarjeta Beyond Visa", en: "Beyond Visa Card" },
+            desc: { es: "La tarjeta que te recompensa de verdad. Cashback transparente en gasolineras y compras diarias.", en: "Our finest reward program. Absolute Cashback on supermarket goods, logistics and transit." },
+            rate: "3% Cashback",
+            badge: { es: "Premium", en: "Highly Rated" },
+            features: [
+              { es: "Sin cuota anual obligatoria", en: "No mandatory annual account credit dues" },
+              { es: "Seguro de colisión de autos alquilados", en: "Car rental collision protection coverage" },
+              { es: "Monitoreo 24/7 contra fraudes", en: "24/7 security monitoring against card abuse" }
+            ]
+          },
+          {
+            title: { es: "Visa Beyond Infinite", en: "Visa Beyond Infinite" },
+            desc: { es: "Para quienes disfrutan viajar. Accesos exclusivos a salas VIP de aeropuertos y seguros médicos mundiales.", en: "Engineered specifically for travel. Elite access to airport VIP spaces and medical coverage overseas." },
+            rate: "1.99% Promo APR",
+            badge: { es: "Viajero", en: "World Class Escapes" },
+            features: [
+              { es: "60k puntos de bienvenida acreditables", en: "60,000 convertible points welcome bounty" },
+              { es: "Asistente concierge exclusivo las 24 hr", en: "Professional concierge assistant 24/7" },
+              { es: "Sin cargos por divisas extranjeras", en: "Zero fees on overseas purchases" }
+            ]
+          },
+          {
+            title: { es: "Tarjeta Visa Secured", en: "Visa Secured Card" },
+            desc: { es: "La herramienta perfecta para construir, mejorar o restaurar tu reputación de crédito de forma segura.", en: "Pristine credit builder account. Rehabilitate credit marks with total control." },
+            rate: "15.99% APR Fixed",
+            badge: { es: "Control", en: "Credit Builder" },
+            features: [
+              { es: "Línea garantizada mediante depósito", en: "Security deposits match credit capacity" },
+              { es: "Reportes mensuales a burós de crédito", en: "Frequent reports issued to credit bureaus" },
+              { es: "Opción de aumento de límite por buen pago", en: "Limit increases for stable payout cycles" }
+            ]
+          }
+        ],
+        prestamos_hipotecas: [
+          {
+            title: { es: "Préstamo Personal", en: "Personal Loan" },
+            desc: { es: "Dinero rápido y sin colaterales para consolidar deudas, reparaciones hogareñas o contingencias.", en: "Pristine unsecured loans for consolidation or unexpected home repair costs." },
+            rate: "5.99% APR Min",
+            badge: { es: "Ágil", en: "Instant Credit" },
+            features: [
+              { es: "Aprobación y desembolso en 24 horas", en: "Fast underwriting processed inside 1 day" },
+              { es: "Plazos cómodos de pago hasta de 84 meses", en: "Extended terms scheduled up to 84 months" },
+              { es: "Tasa fija garantizada durante su contrato", en: "Guaranteed fixed interest locked for life" }
+            ]
+          },
+          {
+            title: { es: "Financiamiento de Autos", en: "Auto Loan" },
+            desc: { es: "Montate en el auto de tus sueños con las cuotas mensuales más accesibles en vehículos nuevos o usados.", en: "Secure stable payment plans matching luxury new or second-hand auto upgrades." },
+            rate: "4.99% Promo APR",
+            badge: { es: "Comodidad", en: "Automobile deals" },
+            features: [
+              { es: "Opciones de financiamiento al 100%", en: "Up to 100% full value auto underwriting details" },
+              { es: "Aplica en línea en menos de 5 minutos", en: "Fast digital app processing inside 5 minutes" },
+              { es: "Términos adaptados a su flujo económico", en: "Adaptive term schedules for your economic comfort" }
+            ]
+          },
+          {
+            title: { es: "Hipoteca FirstMortgage", en: "FirstMortgage Deal" },
+            desc: { es: "Te orientamos para construir o adquirir tu hogar. Ofertas especiales para primeros compradores.", en: "Expert assistance to construct, acquire or refinance houses in Puerto Rico." },
+            rate: "5.75% APP Fixed",
+            badge: { es: "Hogar", en: "Special Mortgages" },
+            features: [
+              { es: "Incentivos especiales por vivienda principal", en: "Special tax-reduction mortgage opportunities" },
+              { es: "Sujeto a programas de ayuda de gobierno", en: "Compatible with regional housing grants" },
+              { es: "Expertos locales te acompañan en el cierre", en: "Local underwriting consultants lead closing phases" }
+            ]
+          }
+        ]
+      };
+
+      function setProductTab(tab) {
+        activeProductTab = tab;
+        
+        // update tab styles
+        const tabsList = ['cuentas', 'tarjetas', 'prestamos'];
+        tabsList.forEach(t => {
+          const btn = document.getElementById(`prod-tab-${t}`);
+          if (t === tab) {
+            btn.className = "px-6 py-3 font-semibold text-sm border-b-2 border-fb-green text-fb-green focus:outline-none transition-all flex items-center gap-1.5";
+          } else {
+            btn.className = "px-6 py-3 font-semibold text-sm border-b-2 border-transparent text-gray-400 hover:text-fb-charcoal focus:outline-none transition-all flex items-center gap-1.5";
+          }
+        });
+
+        renderProducts();
+      }
+
+      function renderProducts() {
+        const container = document.getElementById('product-tab-content');
+        let key = activeProductTab;
+        if (key === 'prestamos') key = 'prestamos_hipotecas'; // Map tab key to model key
+        
+        const list = dbProducts[key] || [];
+        container.innerHTML = '';
+        
+        list.forEach((prod, idx) => {
+          const title = prod.title[currentLang] || prod.title;
+          const desc = prod.desc[currentLang] || prod.desc;
+          const badge = prod.badge[currentLang] || prod.badge;
+          const rateVal = typeof prod.rate === 'object' ? prod.rate[currentLang] : prod.rate;
+
+          // Features rendering
+          let featHtml = '';
+          prod.features.forEach(feat => {
+            const featText = feat[currentLang] || feat;
+            featHtml += `
+              <li class="flex items-start gap-2.5">
+                <i class="fa-solid fa-check text-fb-green mt-1 text-xs"></i>
+                <span class="text-xs text-gray-600 font-medium">${featText}</span>
+              </li>
+            `;
+          });
+
+          // Product Card Template
+          const card = `
+            <div class="bg-fb-graybg p-6 rounded-2xl border border-gray-150 hover:border-fb-green/45 transition-all duration-300 flex flex-col justify-between hover:shadow-lg transform hover:-translate-y-1">
+              <div>
+                <div class="flex justify-between items-center mb-3">
+                  <span class="bg-fb-green text-white font-extrabold text-[8px] uppercase tracking-wider px-2 py-0.5 rounded-full">${badge}</span>
+                  <span class="text-xs font-black text-fb-green">${rateVal}</span>
+                </div>
+                <h3 class="font-display font-extrabold text-[#111] text-lg mb-2">${title}</h3>
+                <p class="text-xs text-gray-500 mb-6 leading-relaxed">${desc}</p>
+                <ul class="space-y-2.5 mb-6">
+                  ${featHtml}
+                </ul>
+              </div>
+              <a href="#contacto" class="block text-center bg-white hover:bg-fb-green text-fb-green hover:text-white border-2 border-fb-green font-bold py-2.5 rounded-lg text-xs tracking-wider uppercase transition-all">
+                ${currentLang === 'es' ? 'Ver Detalles' : 'View Details'}
+              </a>
+            </div>
+          `;
+          container.innerHTML += card;
+        });
+      }
+
+
+      // MORTGAGE & LOAN CALCULATOR ENGINE
+      let currentCalcTerm = 30;
+
+      function setCalcTerm(term) {
+        currentCalcTerm = term;
+        ['15', '30', '5'].forEach(t => {
+          const btn = document.getElementById(`term-btn-${t}`);
+          if (parseInt(t) === term) {
+            btn.className = "py-2 border-2 border-fb-green rounded-lg text-xs font-bold text-fb-green focus:outline-none bg-fb-lightgreen/50";
+          } else {
+            btn.className = "py-2 border border-gray-200 hover:border-fb-green rounded-lg text-xs font-bold text-gray-600 focus:outline-none transition-all hover:bg-fb-lightgreen";
+          }
+        });
+        runCalculator();
+      }
+
+      function runCalculator() {
+        const amtInput = document.getElementById('calc-amount');
+        const rateInput = document.getElementById('calc-rate');
+        
+        const amount = parseFloat(amtInput.value);
+        const rate = parseFloat(rateInput.value);
+
+        // Update Slider Labels
+        document.getElementById('calc-amount-label').innerText = `$${amount.toLocaleString()}`;
+        document.getElementById('calc-rate-label').innerText = `${rate.toFixed(2)}%`;
+
+        // PMT Monthly Calculation logic: M = P [ i(1+i)^n ] / [ (1+i)^n - 1 ]
+        const monthlyRate = (rate / 100) / 12;
+        const totalMonths = currentCalcTerm * 12;
+        
+        let monthlyPayment;
+        if (monthlyRate === 0) {
+          monthlyPayment = amount / totalMonths;
+        } else {
+          monthlyPayment = amount * (monthlyRate * Math.pow(1 + monthlyRate, totalMonths)) / (Math.pow(1 + monthlyRate, totalMonths) - 1);
+        }
+
+        document.getElementById('calc-monthly-payment').innerText = `$${monthlyPayment.toFixed(2)}`;
+      }
+
+
+      // WINDOW LOAD INITIATOR
+      window.onload = function() {
+        // Run initializations
+        applyTranslations();
+        renderProducts();
+        runCalculator();
+        startSlideShow();
+
+        // Pause Slider Autoplay on Header Hover Action
+        const container = document.getElementById('slide-container');
+        if (container) {
+          container.addEventListener('mouseenter', stopSlideShow);
+          container.addEventListener('mouseleave', startSlideShow);
+        }
+      };
+    </script>
+  </body>
 </html>
